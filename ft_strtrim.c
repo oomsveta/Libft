@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:55:37 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/01 20:32:57 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/07 15:11:29 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strtrim(char const *str, char const *chars)
 	size_t			end;
 
 	end = ft_strlen(str);
-	while (end > start && ft_strchr(chars, str[end]))
+	while (end > start && ft_strchr(chars, str[end - 1]))
 	{
 		end -= 1;
 	}
