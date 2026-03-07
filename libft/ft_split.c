@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 20:28:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/01 21:06:10 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/07 15:24:57 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	**ft_split(const char *str, char separator)
 	{
 		return (NULL);
 	}
+	i = 0;
 	while (*str != '\0')
 	{
 		str = skip_char(str, separator);
