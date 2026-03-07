@@ -1,0 +1,22 @@
+# Vim swap files
+*.swp
+
+# WSL
+*Zone.Identifier
+
+# macOS
+.DS_Store
+
+# build leftovers
+libft.a
+a.out
+*.d
+*.o
+
+# clangd
+.cache
+compile_commands.json
+
+# VSCode settings
+.vscode
+
