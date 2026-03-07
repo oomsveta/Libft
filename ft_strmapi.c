@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strmapi(char const *str, char (*fn)(unsigned int, char))
+char	*ft_strmapi(const char *str, char (*fn)(unsigned int, char))
 {
 	size_t	i;
 	char	*mapped;

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/06 17:43:36 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/07 15:17:12 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char			*ft_stpcpy(char *dest, const char *src);
 char			*ft_strchr(const char *str, int chr);
 char			*ft_strchrnul(const char *str, int chr);
 char			*ft_strdup(const char *str);
-char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_strtrim(char const *str, char const *chars);
-char			*ft_substr(char const *str, unsigned int start, size_t len);
+char			*ft_strjoin(const char *s1, const char *s2);
+char			*ft_strtrim(const char *str, const char *chars);
+char			*ft_substr(const char *str, unsigned int start, size_t len);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isascii(int c);

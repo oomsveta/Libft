@@ -6,14 +6,14 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:15:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/07 15:09:23 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/07 15:17:12 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>	// provides malloc, NULL
 #include "libft.h"
 
-char	*ft_substr(char const *str, unsigned int start, size_t max_len)
+char	*ft_substr(const char *str, unsigned int start, size_t max_len)
 {
 	size_t	len;
 	char	*substr;

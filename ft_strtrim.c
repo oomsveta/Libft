@@ -6,13 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:55:37 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/07 15:11:29 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/07 15:16:58 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"	// provides ft_strchr, ft_strlen, ft_strspn, ft_substr
 
-char	*ft_strtrim(char const *str, char const *chars)
+char	*ft_strtrim(const char *str, const char *chars)
 {
 	const size_t	start = ft_strspn(str, chars);
 	size_t			end;
