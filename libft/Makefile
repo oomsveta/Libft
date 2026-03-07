@@ -1,0 +1,45 @@
+NAME = libft.a
+
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
+CPPFLAGS := -MMD -MP
+
+ifdef DEBUG
+    CC := clang
+    CFLAGS += -g3 -Og -fsanitize=undefined
+else
+    CFLAGS += -O3 -g0
+endif
+
+ifdef ASAN
+	CFLAGS += -fsanitize=address
+endif
+
+SRC := ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c
+OBJ := $(SRC:.c=.o)
+DEP := $(OBJ:.o=.d)
+
+AR ?= ar
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(AR) rcs $@ $^
+
+%.o: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+clean:
+	$(RM) -- $(OBJ) $(DEP)
+
+fclean: clean
+	$(RM) -- $(NAME)
+
+re: fclean all
+
+norm:
+	norminette $(SRC) *.h
+
+-include $(DEP)
+
+.PHONY: all clean fclean re norm
