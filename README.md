@@ -75,6 +75,76 @@ Functions that aren't part of the standard library, whose specifications were gi
 |☐|ft_lstnew|malloc|
 |☐|ft_lstsize||
 
+## Installation & Usage
+
+> [!WARNING]
+> The I/O for this project is implemented on top of UNIX syscalls, which means you will need a UNIX-like system (such as Linux or macOS) to compile and run it.
+
+### Compilation
+
+To compile the project, simply go to the `libft/` directory and run `make`:
+```bash
+cd libft/
+make
+```
+This will produce a `libft.a` archive containing all the compiled `.o` object files, which you can then reuse in other projects.
+
+### Compiling with libft.a
+
+```bash
+cc <your src/obj files> libft.a -I<path to the directory containing libft.h>
+```
+
+> [!WARNING]
+> `libft.a` must come AFTER everything that uses it in the list of files you provide to the compiler. This is because the linker discards all the functions in your archive that aren't currently needed, and its list of necessary functions is based exclusively on the objects it has parsed so far. If `libft.a` is the very first file provided in your link command, all of its contents will be discarded!
+
+### Embedding in another project
+
+Some 42 projects allow you to reuse your Libft. When that's the case, you aren't allowed to simply turn in the pre-compiled `libft.a` archive; you have to build it directly within your project's build process.
+
+To do so, just copy/paste the `libft/` directory at the root of your project, along with its `Makefile`, header, and source files.
+
+Then, update the main `Makefile` of your project to add the following variables:
+
+```Makefile
+LIBFT_DIR := libft
+LIBFT := $(LIBFT_DIR)/libft.a
+```
+
+Append the following options to your compiler flags:
+
+```Makefile
+LDFLAGS += -L$(LIBFT_DIR)
+LDLIBS += -lft
+CPPFLAGS += -I$(LIBFT_DIR)
+```
+
+> [!WARNING]
+> Make sure you use `$(CPPFLAGS)` in your implicit rules to compile objects from sources, otherwise the C preprocessor won't be able to find `libft.h`.
+
+You can now create a rule to build the Libft and add it as a dependency to your main linking rule:
+
+```Makefile
+$(LIBFT): $(LIBFT_DIR)/Makefile
+	@$(MAKE) -C $(LIBFT_DIR)
+
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(LDFLAGS) $(OBJ) $(LDLIBS) -o $@
+```
+*(Notice how `$(OBJ)` comes before `$(LDLIBS)` to respect the linking order mentioned earlier).*
+
+Don't forget to update your clean/fclean rules too:
+
+```Makefile
+clean:
+	$(RM) -r -- $(BUILD_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+
+fclean: clean
+	$(RM) -- $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+```
+
 ## 📋 Coding Style
 
 My coding style conforms to the [Norm](./norm.en.pdf), a set of strict styling guidelines enforced for all C exercises, which all students must follow under penalty of a zero grade.
