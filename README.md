@@ -71,7 +71,7 @@ Functions that aren't part of the standard library, whose specifications were gi
 |✅|ft_lstdelone|free|
 |✅|ft_lstiter||
 |✅|ft_lstlast||
-|☐|ft_lstmap||
+|✅|ft_lstmap||
 |✅|ft_lstnew|malloc|
 |✅|ft_lstsize||
 
