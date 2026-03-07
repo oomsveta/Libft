@@ -65,15 +65,15 @@ Functions that aren't part of the standard library, whose specifications were gi
 
 ||name|allowed functions|
 |--|--|--|
-|☐|ft_lstadd_back||
-|☐|ft_lstadd_front||
-|☐|ft_lstclear||
-|☐|ft_lstdelone|free|
-|☐|ft_lstiter||
-|☐|ft_lstlast||
+|✅|ft_lstadd_back||
+|✅|ft_lstadd_front||
+|✅|ft_lstclear||
+|✅|ft_lstdelone|free|
+|✅|ft_lstiter||
+|✅|ft_lstlast||
 |☐|ft_lstmap||
-|☐|ft_lstnew|malloc|
-|☐|ft_lstsize||
+|✅|ft_lstnew|malloc|
+|✅|ft_lstsize||
 
 ## 🛠️ Installation & Usage
 
