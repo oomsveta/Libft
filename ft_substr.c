@@ -6,25 +6,26 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:15:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/02 09:21:06 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/07 15:09:23 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>	// provides malloc, NULL
 #include "libft.h"
 
-char	*ft_substr(char const *str, unsigned int start, size_t len)
+char	*ft_substr(char const *str, unsigned int start, size_t max_len)
 {
-	size_t	size;
+	size_t	len;
 	char	*substr;
 
 	str += ft_strnlen(str, start);
-	size = ft_strnlen(str, len) + 1;
-	substr = malloc(size);
+	len = ft_strnlen(str, max_len);
+	substr = malloc(len + 1);
 	if (!substr)
 	{
 		return (NULL);
 	}
-	ft_memcpy(substr, str, size);
+	ft_memcpy(substr, str, len);
+	substr[len] = '\0';
 	return (substr);
 }
