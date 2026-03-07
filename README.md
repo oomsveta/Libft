@@ -21,7 +21,7 @@ The following functions from the standard C library must be reimplemented:
 |--|--|--|
 |☐|atoi||
 |✅|bzero||
-|☐|calloc|malloc|
+|✅|calloc|malloc|
 |✅|isalnum||
 |✅|isalpha||
 |✅|isascii||
