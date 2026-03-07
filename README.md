@@ -1,6 +1,6 @@
 *This project has been created as part of the 42 curriculum by lwicket*
 
-## Project Overview
+## ℹ️ Project Overview
 
 > [!WARNING]
 > This project is still a work in progress. Its contents, along with the information in this README file, are subject to change.
@@ -75,7 +75,7 @@ Functions that aren't part of the standard library, whose specifications were gi
 |☐|ft_lstnew|malloc|
 |☐|ft_lstsize||
 
-## Installation & Usage
+## 🛠️ Installation & Usage
 
 > [!WARNING]
 > The I/O for this project is implemented on top of UNIX syscalls, which means you will need a UNIX-like system (such as Linux or macOS) to compile and run it.
@@ -164,7 +164,7 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 > [!TIP]
 > You can find the latest version of the Norm in the [Norminette repository](https://github.com/42School/norminette) – the program used to check conformity with the Norm. The version of the Norm included in this repository is the one that was in use when I completed this project.
 
-## References & Acknowledgments
+## 📚 References & Acknowledgments
 
 ### ISO/IEC 9899:2024 aka C23
 
