@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:24:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/07 18:29:06 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 19:54:06 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_lstclear(t_list **head, void (*delete_fn)(void *))
 	while (*head)
 	{
 		current = *head;
-		head = &(*head)->next;
+		*head = current->next;
 		ft_lstdelone(current, delete_fn);
 	}
 }
