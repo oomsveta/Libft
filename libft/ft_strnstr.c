@@ -6,10 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 16:57:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:28:20 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:46:25 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// provides ft_memchr, ft_memmem, ft_strlen, ft_strnlen, NULL, size_t
 #include "libft.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)

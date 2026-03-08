@@ -6,11 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 09:22:10 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/02 09:24:47 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:40:24 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides ft_memcpy
+#include "libft.h"	// provides ft_memcpy, size_t
 
 static inline void	*copy_descending(
 	unsigned char *dest, const unsigned char *src, size_t n

@@ -6,13 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:31:46 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:31:56 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:41:13 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
-#include <unistd.h>
-#include "libft.h"
+#include <limits.h>	// provides CHAR_BIT
+#include <unistd.h>	// provides write
+#include "libft.h"	// provides ft_abs
 
 void	ft_putnbr_fd(int n, int fd)
 {

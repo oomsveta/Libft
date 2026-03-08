@@ -6,12 +6,12 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 20:28:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/07 15:24:57 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:42:10 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include <stdlib.h>	// provides free, malloc, NULL, size_t
+#include "libft.h"	// provides ft_strchrnul, ft_substr
 
 static char	*skip_char(const char *str, char c)
 {

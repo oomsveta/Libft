@@ -6,15 +6,15 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:14:31 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/07 18:19:42 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:37:05 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h"	// provides provides ft_lstlast, t_list
 
 void	ft_lstadd_back(t_list **head, t_list *node)
 {
-	if (*head == NULL)
+	if (!*head)
 	{
 		*head = node;
 		return ;

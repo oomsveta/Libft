@@ -6,12 +6,12 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 21:08:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/01 21:56:04 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:42:57 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>	// provides free, malloc
-#include "libft.h"
+#include <stdlib.h>	// provides malloc, NULL, size_t
+#include "libft.h"	// provides ft_memcpy, ft_strlen
 
 char	*ft_strdup(const char *str)
 {

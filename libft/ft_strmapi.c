@@ -6,12 +6,12 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:33:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:33:17 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:45:37 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include <stdlib.h>	// provides malloc, NULL, size_t
+#include "libft.h"	// provides ft_strlen
 
 char	*ft_strmapi(const char *str, char (*fn)(unsigned int, char))
 {

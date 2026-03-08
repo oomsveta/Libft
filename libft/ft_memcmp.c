@@ -6,11 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:03:42 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:15:46 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:39:58 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h"	// provides size_t, t_word
 
 static inline int	baby_memcmp(
 	const unsigned char *s1, const unsigned char *s2, size_t n
