@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:32:27 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:44:16 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int				ft_lstsize(t_list *lst);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_toupper(int c);
+size_t			ft_strlcat(char *dest, const char *src, size_t size);
 size_t			ft_strlcpy(char *dest, const char *src, size_t size);
 size_t			ft_strlen(const char *str);
 size_t			ft_strnlen(const char *str, size_t n);
