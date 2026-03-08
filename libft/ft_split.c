@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 20:28:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:42:10 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 19:07:51 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ static size_t	count_words(const char *str, char separator)
 	size_t	nbr_of_words;
 
 	nbr_of_words = 0;
+	str = skip_char(str, separator);
 	while (*str)
 	{
-		str = skip_char(str, separator);
 		nbr_of_words += 1;
 		str = ft_strchrnul(str, separator);
+		str = skip_char(str, separator);
 	}
 	return (nbr_of_words);
 }
@@ -60,9 +61,9 @@ char	**ft_split(const char *str, char separator)
 		return (NULL);
 	}
 	i = 0;
+	str = skip_char(str, separator);
 	while (*str != '\0')
 	{
-		str = skip_char(str, separator);
 		end_ptr = ft_strchrnul(str, separator);
 		words[i] = ft_substr(str, 0, end_ptr - str);
 		if (!words[i])
@@ -71,7 +72,7 @@ char	**ft_split(const char *str, char separator)
 			return (NULL);
 		}
 		i += 1;
-		str = end_ptr;
+		str = skip_char(end_ptr, separator);
 	}
 	words[i] = NULL;
 	return (words);
