@@ -19,7 +19,7 @@ The following functions from the standard C library must be reimplemented:
 
 ||name|allowed functions|
 |--|--|--|
-|☐|atoi||
+|✅|atoi||
 |✅|bzero||
 |✅|calloc|malloc|
 |✅|isalnum||
