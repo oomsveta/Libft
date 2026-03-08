@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 15:44:19 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 16:12:06 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_list			*ft_lstnew(void *content);
 t_list 			*ft_lstmap(t_list *ls, void *(*f)(void *), void (*del)(void *));
 unsigned int	ft_abs(int n);
 void			*ft_calloc(size_t nbr_of_elements, size_t element_size);
+void			*ft_memchr(const void *mem, int chr, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 void			*ft_memset(void *buffer, int byte, size_t size);

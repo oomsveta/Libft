@@ -27,7 +27,7 @@ The following functions from the standard C library must be reimplemented:
 |✅|isascii||
 |✅|isdigit||
 |✅|isprint||
-|☐|memchr||
+|✅|memchr||
 |☐|memcmp||
 |✅|memcpy||
 |✅|memmove||
