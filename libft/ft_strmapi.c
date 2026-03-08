@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:33:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:45:37 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 18:51:48 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*ft_strmapi(const char *str, char (*fn)(unsigned int, char))
 	while (str[i] != '\0')
 	{
 		mapped[i] = fn(i, str[i]);
+		i += 1;
 	}
 	return (mapped);
 }
