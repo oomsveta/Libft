@@ -8,7 +8,7 @@ ifdef DEBUG
     CC := clang
     CFLAGS += -g3 -Og -fsanitize=undefined
 else
-    CFLAGS += -O3 -g0
+    CFLAGS += -O3 -g0 -fno-builtin
 endif
 
 ifdef ASAN
