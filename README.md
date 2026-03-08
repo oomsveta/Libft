@@ -38,7 +38,7 @@ The following functions from the standard C library must be reimplemented:
 |✅|strlcpy||
 |✅|strlen||
 |✅|strncmp||
-|☐|strnstr||
+|✅|strnstr||
 |✅|strrchr||
 |✅|tolower||
 |✅|toupper||

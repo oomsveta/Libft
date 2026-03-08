@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:17:37 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:29:26 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ size_t			ft_strlcpy(char *dest, const char *src, size_t size);
 size_t			ft_strlen(const char *str);
 size_t			ft_strnlen(const char *str, size_t n);
 size_t			ft_strspn(const char *str, const char *spn);
+char			*ft_strnstr(const char *big, const char *little, size_t n);
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstnew(void *content);
 t_list 			*ft_lstmap(t_list *ls, void *(*f)(void *), void (*del)(void *));
@@ -57,6 +58,11 @@ unsigned int	ft_abs(int n);
 void			*ft_calloc(size_t nbr_of_elements, size_t element_size);
 void			*ft_memchr(const void *mem, int chr, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
+void			*ft_memmem(
+					const void *haystack,
+					size_t haystack_len,
+					const void *needle,
+					size_t needle_len);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 void			*ft_memset(void *buffer, int byte, size_t size);
 void			ft_bzero(void *buffer, size_t size);

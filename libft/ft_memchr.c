@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 16:00:51 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 16:18:01 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:20:46 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,3 +97,36 @@ void	*ft_memchr(const void *mem, int chr, size_t n)
 }
 
 #endif
+
+void	*ft_memmem(
+	const void *haystack,
+	size_t haystack_len,
+	const void *needle,
+	size_t needle_len
+)
+{
+	const unsigned char	*h = haystack;
+	const unsigned char	*n = needle;
+	const unsigned char	*match;
+	size_t				remaining;
+
+	if (needle_len == 0)
+		return ((void *)haystack);
+	if (haystack_len < needle_len)
+		return (NULL);
+	if (needle_len == 1)
+		return (ft_memchr(haystack, *(unsigned char *)needle, haystack_len));
+	remaining = haystack_len - needle_len + 1;
+	while (remaining > 0)
+	{
+		match = ft_memchr(h, n[0], remaining);
+		if (!match)
+			break ;
+		if (match[needle_len - 1] == n[needle_len - 1])
+			if (ft_memcmp(match, n, needle_len) == 0)
+				return ((void *)match);
+		remaining -= (match - h) + 1;
+		h = match + 1;
+	}
+	return (NULL);
+}
