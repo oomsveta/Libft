@@ -178,6 +178,16 @@ musl was my main reference when implementing the libc functions. It's a treasure
 
 https://musl.libc.org/
 
+### Sean Eron Anderson's Bit Twiddling Hacks
+
+The definitive reference for bitwise tricks, a must-read for implementing SWAR strategies.
+
+https://graphics.stanford.edu/~seander/bithacks.html
+
 ### Linus' Good Taste
 
 In a famous TED interview, Linus Torvalds demonstrates an approach to implementing linked list functions that he considers "good taste" in coding. This was particularly helpful when implementing functions that modify the head pointer. The following repository was a great help in understanding the concept: https://github.com/mkirchner/linked-list-good-taste
+
+### ChatGPT 5.3(?)
+
+This entire project has been handcrafted by a human (yours truly), but proofread by AI. Many thanks to the free version of ChatGPT for fixing my grammar and providing feedback on my cursed code!
