@@ -6,13 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 00:02:05 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 00:22:46 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/08 17:31:36 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"	// provides ft_lstclear, ft_lstnew, NULL, t_list
 
-t_list *ft_lstmap(t_list *lst, void *(*fn)(void *), void (*delete_fn)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*fn)(void *), void (*delete_fn)(void *))
 {
 	t_list	*mapped;
 	t_list	*new_node;
