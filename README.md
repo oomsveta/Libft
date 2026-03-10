@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by lwicket*
+*This project has been created as part of the 42 curriculum by lwicket.*
 
 ## ℹ️ Project Overview
 
@@ -9,7 +9,11 @@ The **Libft** (where *ft* stands for *Forty-Two*) is the very first project of t
 
 For the first projects of the 42 curriculum, students are not allowed to use any function from the standard library: everything must be reimplemented on top of system calls (`write`, `read`, etc.), with the sole exceptions of `malloc` and `free`.
 
-Beyond the pedagogical goal of learning how things work under the hood, reimplementing their own library provides students with a set of functions they can reuse in future projects.
+Beyond the educational goal of learning how things work under the hood, reimplementing their own library provides students with a set of functions they can reuse in future projects.
+
+### Design Considerations
+
+I wanted my Libft to be an opportunity to learn advanced aspects of the C language, and therefore decided to approach it from the perspective of strict standard compliance and performance.
 
 ### Contents
 
@@ -75,12 +79,23 @@ Functions that aren't part of the standard library, whose specifications were gi
 |✅|ft_lstnew|malloc|
 |✅|ft_lstsize||
 
-## 🛠️ Installation & Usage
+## 🛠️ Build & Usage
 
-> [!WARNING]
-> The I/O for this project is implemented on top of UNIX syscalls, which means you will need a UNIX-like system (such as Linux or macOS) to compile and run it.
+### Requirements
 
-### Compilation
+- GCC or Clang
+- [`ar`](https://en.wikipedia.org/wiki/Ar_(Unix)) for creating the archive
+- [C99](https://en.cppreference.com/w/c/99.html) support
+- A UNIX-like system (such as Linux or macOS)
+
+As per the assignment, the code is compiled using `cc`. It is not specified which compiler `cc` refers to, but it is safe to assume that it will be either GCC or Clang.
+
+> [!TIP]
+> At the time I wrote this, on the Brussels campus, whether `cc` points to GCC or Clang actually varies from one machine to another.
+
+My project relies on features from C99 (compound literals, inline functions, single-line comments and stdbool.h).
+
+### Building the library
 
 To compile the project, simply go to the `libft/` directory and run `make`:
 ```bash
@@ -163,6 +178,25 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 
 > [!TIP]
 > You can find the latest version of the Norm in the [Norminette repository](https://github.com/42School/norminette) – the program used to check conformity with the Norm. The version of the Norm included in this repository is the one that was in use when I completed this project.
+
+## 🧑‍🔬 Implementation Notes
+
+### atoi
+
+My implementation does nothing to detect or handle out-of-bounds overflow. I based this design choice on the following excerpt from the C Standard:
+> The functions atof, **atoi**, atol, and atoll **need not affect the value of the integer expression errno on an error. If the value of the result cannot be represented, the behavior is undefined**.
+
+However, my implementation ensures that all valid, representable values within the range of an `int` are parsed correctly without triggering internal overflows. This requires special care due to how string-to-integer conversion is typically implemented.
+
+Usually, `atoi` calculates the result by reading digits into a positive accumulator (multiplying by 10 and adding the new digit), and only converts the final result to a negative number at the very end if a minus sign was detected. In C, [signed integer overflow is strict Undefined Behavior (UB)](https://wiki.sei.cmu.edu/confluence/spaces/c/pages/87152210/INT32-C.+Ensure+that+operations+on+signed+integers+do+not+result+in+overflow).
+
+This standard accumulation strategy creates a subtle problem when parsing `INT_MIN`. In two's complement arithmetic, the absolute value of `INT_MIN` is exactly one greater than `INT_MAX`. Therefore, if the accumulator is simply declared as an `int`, parsing the string representation of `INT_MIN` will cause a signed integer overflow on the final digit, triggering UB before the negation step is ever reached.
+
+On many common architectures, this bug goes completely unnoticed. The compiler's underlying behavior for signed overflow often defaults to two's complement wraparound, meaning the positive accumulator wraps completely around to the negative `INT_MIN` value. Negating `INT_MIN` typically yields `INT_MIN` again, making the function output the correct answer by sheer luck. However, relying on this is unsafe and violates the C standard; compiling the code with `-fsanitize=undefined` then running it flags this as an error.
+
+To solve this, one might be tempted to use a larger signed type, such as `long`, for the accumulator. However, this is not a portable solution. The C Standard does not guarantee that `long` (or even a `long long` for that matter) is larger than `int`; for example, under the LLP64 data model used by 64-bit Windows, both `int` and `long` are exactly 32 bits.
+
+Therefore, the only strictly portable way to safely accumulate digits and support `INT_MIN` is to use an `unsigned int` for the accumulator. Unsigned arithmetic is guaranteed by the Standard never to overflow (it operates using modulo arithmetic), and an `unsigned int` is perfectly capable of holding the absolute value of `INT_MIN` before the final sign logic is applied.
 
 ## 📚 References & Acknowledgments
 
