@@ -93,7 +93,7 @@ As per the assignment, the code is compiled using `cc`. It is not specified whic
 > [!TIP]
 > At the time I wrote this, on the Brussels campus, whether `cc` points to GCC or Clang actually varies from one machine to another.
 
-My project relies on features from C99 (compound literals, inline functions, single-line comments and stdbool.h).
+My project relies on features from C99 (compound literals, inline functions, single-line comments and `stdbool.h`).
 
 ### Building the library
 
@@ -180,6 +180,16 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 > You can find the latest version of the Norm in the [Norminette repository](https://github.com/42School/norminette) – the program used to check conformity with the Norm. The version of the Norm included in this repository is the one that was in use when I completed this project.
 
 ## 🧑‍🔬 Implementation Notes
+
+### Compiler flags
+
+#### -O3
+
+I [already learned](https://github.com/oomsveta/42-Piscine-February-2026/tree/main/rush_02#the--o3-incident) the hard way that `-O3` could totally jeopardize my projects. That said, it was an interesting learning experience, and so I decided to use that flag again 🐱
+
+This had the following consequences:
+- I always have to do something with the return value of `write`. This is because, on Ubuntu, `gcc` is customized to define `_FORTIFY_SOURCE=3` when compiling with any level of optimization greater than 0. As a side effect, this requires you to use the return value of `write`; otherwise, it emits a warning, which turns into a fatal error thanks to the mandatory `-Werror` flag. Simply casting to `(void)` isn't enough to silence the warning, so I used the return value in its intended way: to detect errors, and retry if possible.
+- I had to compile with `-fno-builtin`, because the compiler was sometimes smart enough to detect that I was basically doing a `memcpy`. It would then replace my code with a call to the actual, builtin `memcpy` function. This would, of course, have been detected as the use of a forbidden function, which is punished by a `-42` grade. I used the command `nm -u <my_file.o>` to ensure all my objects only contained the allowed functions.
 
 ### atoi
 
