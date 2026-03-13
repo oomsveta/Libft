@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:32:33 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/12 20:48:15 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/13 12:20:57 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	ft_putstr_fd(char *str, int fd)
 {
-	ssize_t			total_written;
+	size_t			total_written;
 	ssize_t			bytes_written;
 	const size_t	len = ft_strlen(str);
 
