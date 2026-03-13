@@ -181,6 +181,193 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 
 ## 🧑‍🔬 Implementation Notes
 
+### memory functions
+
+Most of the time I spent working on this project went into polishing my memory manipulation functions (`mem*`). I really wanted to make them as fast as possible, and I had to overcome several obstacles along the way.
+
+First, let me explain how memory functions can be made faster using `bzero` as an example. Here's a first, naïve, unoptimized approach:
+
+```c
+void	ft_bzero(void *buffer, size_t size)
+{
+	unsigned char	*ptr;
+
+	ptr = buffer;
+	while (size--)
+	{
+		*ptr++ = 0;
+	}
+}
+```
+
+This sets `size` bytes to `0`, one by one. But what if we could set the bytes two at a time? Four at a time? Eight at a time?! What if I told you that is entirely possible?
+
+```c
+void	ft_bzero(void *buffer, size_t size)
+{
+	unsigned char	*ptr;
+
+	ptr = buffer;
+	while (size >= 8)
+	{
+		*(uint64_t *)ptr = 0;
+		ptr += 8;
+		size -= 8;
+	}
+	while (size--)
+	{
+		*ptr++ = 0;
+	}
+}
+```
+Since a `uint64_t` is 8 bytes wide, we can use it to write bytes 8 at a time, effectively making our bzero up to 8 times faster!
+
+Unfortunately, although this worked seamlessly on my machine, it has two critical flaws:
+- It writes to potentially unaligned memory.
+- It violates strict aliasing rules.
+
+#### Memory alignment
+
+Accessing unaligned memory is slower than accessing aligned memory, but first and foremost, **it is undefined behavior (UB)**. It can completely crash a program when run on older architectures. In order to meet our portability goals, we absolutely must address this issue.
+
+Unaligned memory access can be caught by [UBSan (UndefinedBehaviorSanitizer)](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html). Let's write a `main` function to test our code, and compile it with `-fsanitize=undefined` to confirm that our current implementation indeed relies on undefined behavior:
+
+```c
+int main(void)
+{
+    float arr[100];
+
+    ft_bzero(arr + 1, sizeof arr - 1);
+}
+```
+```bash
+$> clang test-bzero.c -fsanitize=undefined -g3 && ./a.out
+test-bzero.c:15:3: runtime error: store to misaligned address 0x7ffc57d96b94 for type 'uint64_t' (aka 'unsigned long'), which requires 8 byte alignment
+0x7ffc57d96b94: note: pointer points here
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  27 6d d9 57 fc 7f 00 00  99 b3 e6 75 c8 7f 00 00
+              ^ 
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior test-bzero.c:15:3 
+```
+
+Perfect, it catches the error. We now have a referee to judge whether we've successfully solved the unaligned access problem.
+
+A common approach to solving this is to loop byte-by-byte until the pointer is correctly aligned:
+```c
+void	ft_bzero(void *buffer, size_t size)
+{
+	unsigned char	*ptr;
+
+	ptr = buffer;
+	if (size < 8)
+	{
+		// Do a byte-by-byte copy
+		return ;
+	}
+	// Loop until the address is aligned to an 8-byte boundary
+	while (size != 0 && (uintptr_t)ptr % 8 != 0)
+	{
+		*ptr++ = 0;
+		size -= 1;
+	}
+	while (size >= 8)
+	{
+		*(uint64_t *)ptr = 0;
+		ptr += 8;
+		size -= 8;
+	}
+	while (size--)
+	{
+		*ptr++ = 0;
+	}
+}
+```
+
+The first loop iterates until the address is aligned on an 8-byte boundary, allowing the fast 8-byte loop to safely take over. Compiling it again with the same `main` yields no more errors 🥳
+
+But are we done yet? This extra alignment loop adds a lot of branching, doesn't it?
+
+I stumbled upon this really clever bit of code while reading [musl's implementation of `memset`](https://git.musl-libc.org/cgit/musl/tree/src/string/memset.c#n31):
+
+```c
+k = -(uintptr_t)s & 3;
+s += k;
+n -= k;
+```
+
+This first computes the distance to the next 4-byte boundary (`k`), then moves the pointer `s` to it, decreasing the size by the same amount.
+
+Using this same trick, I could directly jump to an aligned address and avoid the alignment loop entirely. The only problem is: How do I zero the "head" of the buffer—the bytes I skipped when jumping to the next boundary? And what about the tail loop, doesn't that add extra branching as well?
+
+Let's pretend for a moment that unaligned memory access is totally fine. I could just do an unaligned write of the head and tail, jump to the next memory boundary, and zero the rest of the buffer using my super-fast aligned loop:
+
+```c
+void	ft_bzero(void *buffer, size_t size)
+{
+	const size_t	align = -(uintptr_t)buffer & 7;
+	unsigned char	*ptr;
+
+	if (size < 8)
+	{
+		// Do a byte by byte copy
+		return ;
+	}
+	ptr = buffer;
+	// unaligned zeroing of the "head"
+	*(uint64_t *)ptr = 0;
+	// unaligned zeroing of the "tail"
+	*(uint64_t *)(ptr + size - 8) = 0;
+	// jump to the next boundary
+	ptr += align;
+	size -= align;
+	while (size >= 8)
+	{
+		*(uint64_t *)ptr = 0;
+		ptr += 8;
+		size -= 8;
+	}
+}
+```
+This works beautifully, but it makes Mr. UB-san unhappy again 😔
+
+At first, I thought I could just wrap my optimized code in a preprocessor condition to check whether the target architecture supports unaligned memory access—using my fast bzero if it did, and falling back to the safe byte-by-byte version if it didn't.
+
+But while reading about solutions to the strict aliasing problem (the second issue with the original fast implementation), I came across a feature of GCC (and Clang) that could totally save the day. Enter the `aligned` type attribute.
+
+The `aligned` attribute allows you to set alignment constraints on a type. It doesn't change the size of the type, but provides hints to the compiler (e.g., "this type might only be aligned to 1 byte"). This allows architectures that support unaligned writes to do them in one go, while safely breaking them down into separate byte instructions on architectures that don't.
+
+```c
+typedef uint64_t __attribute__((aligned (1)))	t_word;
+typedef uint64_t __attribute__((aligned (8)))	t_aligned_word;
+
+void	ft_bzero(void *buffer, size_t size)
+{
+	const size_t	align = -(uintptr_t)buffer & 7;
+	unsigned char	*ptr;
+
+	if (size < 8)
+	{
+		// Do a byte by byte copy
+		return ;
+	}
+	ptr = buffer;
+	*(t_word *)ptr = 0;
+	*(t_word *)(ptr + size - 8) = 0;
+	ptr += align;
+	size -= align;
+	while (size >= 8)
+	{
+		*(t_aligned_word *)ptr = 0;
+		ptr += 8;
+		size -= 8;
+	}
+}
+```
+This is literally the same code as before, with the only difference being the custom types. And with just that, we've solved the unaligned access undefined behavior, while keeping the branchless alignment logic!
+
+#### Strict Aliasing
+
+TODO
+
 ### Compiler flags
 
 #### -O3
