@@ -6,13 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:42:39 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 15:55:35 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/13 12:28:11 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides size_t, t_word
+#include "libft.h"	// provides size_t, t_aligned_word, t_word
 
-static inline void	baby_memset(
+static inline void	byte_by_byte_memset(
 	unsigned char *buffer, unsigned char byte, size_t size
 )
 {
@@ -21,13 +21,6 @@ static inline void	baby_memset(
 		*buffer++ = byte;
 	}
 }
-
-/**
- * If the __may_alias__ attribute is available (to bypass strict aliasing) and
- * the architecture allows unaligned access, use the high-performance version.
- */
-#if defined(__GNUC__) && \
-	(defined(__x86_64__) || defined(__i386__) || defined(__aarch64__))
 
 /**
  * 0. Delegate small buffers (< 1 machine word) to a safe byte-by-byte fallback.
@@ -45,34 +38,21 @@ void	*ft_memset(void *buffer, int byte, size_t size)
 
 	if (size < sizeof(t_word))
 	{
-		baby_memset(buffer, byte, size);
+		byte_by_byte_memset(buffer, byte, size);
 		return (buffer);
 	}
 	ptr = buffer;
 	filler = (t_word)-1 / 255 * (unsigned char)byte;
 	*(t_word *)ptr = filler;
 	*(t_word *)(ptr + size - sizeof(t_word)) = filler;
-	align = -(t_word)buffer & (sizeof(t_word) - 1);
+	align = -(uintptr_t)buffer & (sizeof(t_word) - 1);
 	ptr += align;
 	size -= align;
 	while (size >= sizeof(t_word))
 	{
-		*(t_word *)ptr = filler;
+		*(t_aligned_word *)ptr = filler;
 		ptr += sizeof(t_word);
 		size -= sizeof(t_word);
 	}
 	return (buffer);
 }
-
-/**
- * Slow but portable fallback.
- */
-#else
-
-void	*ft_memset(void *buffer, int byte, size_t size)
-{
-	baby_memset(buffer, byte, size);
-	return (buffer);
-}
-
-#endif

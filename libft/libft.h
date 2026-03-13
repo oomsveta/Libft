@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/12 21:36:24 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/13 12:26:25 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@
 
 # ifdef __GNUC__
 
-typedef uintptr_t __attribute__((__may_alias__))	t_word;
+typedef uintptr_t __attribute__(\
+(__may_alias__, aligned (1)))					t_word;
+typedef uintptr_t __attribute__(\
+(__may_alias__, aligned (sizeof(uintptr_t))))	t_aligned_word;
+
+# else
+
+typedef unsigned char							t_word;
+typedef unsigned char							t_aligned_word;
 
 # endif
 

@@ -228,6 +228,14 @@ The definitive reference for bitwise tricks, a must-read for implementing SWAR s
 
 https://graphics.stanford.edu/~seander/bithacks.html
 
+### GNU Manual: Type Attributes
+
+https://gcc.gnu.org/onlinedocs/gcc-3.3/gcc/Type-Attributes.html
+
+### N3519 Understanding Effective Type Aliasing in C
+
+https://www.open-std.org/jtc1/sc22/WG14/www/docs/n3519.pdf
+
 ### Linus' Good Taste
 
 In a famous TED interview, Linus Torvalds demonstrates an approach to implementing linked list functions that he considers "good taste" in coding. This was particularly helpful when implementing functions that modify the head pointer. The following repository was a great help in understanding the concept: https://github.com/mkirchner/linked-list-good-taste

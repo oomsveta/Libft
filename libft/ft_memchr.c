@@ -6,11 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 16:00:51 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/12 21:36:15 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/13 12:27:52 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides ft_memcmp, NULL, size_t, t_word
+#include "libft.h"	// provides ft_memcmp, NULL, size_t, t_aligned_word, t_word
 
 static inline void	*baby_memchr(
 	const unsigned char *mem, unsigned char chr, size_t n
@@ -27,20 +27,13 @@ static inline void	*baby_memchr(
 	return (NULL);
 }
 
-/**
- * If the __may_alias__ attribute is available (to bypass strict aliasing) and
- * the architecture allows unaligned access, use the high-performance version.
- */
-#if defined(__GNUC__) && \
-	(defined(__x86_64__) || defined(__i386__) || defined(__aarch64__))
-
-static inline void	*scan_word(
-	const unsigned char *mem, int chr, t_word broadcast
+static inline void	*test_word(
+	const unsigned char *mem, t_word value, int chr, t_word broadcast
 )
 {
 	const t_word	ones = (t_word)-1 / 255;
 	const t_word	high = ones << 7;
-	const t_word	diff = *(t_word *)mem ^ broadcast;
+	const t_word	diff = value ^ broadcast;
 
 	if ((diff - ones) & ~diff & high)
 	{
@@ -61,7 +54,7 @@ static inline void	*scan_word(
  */
 void	*ft_memchr(const void *mem, int chr, size_t n)
 {
-	const size_t		align = -(t_word)mem & (sizeof(t_word) - 1);
+	const size_t		align = -(uintptr_t)mem & (sizeof(t_word) - 1);
 	const unsigned char	*end = (const unsigned char *)mem + n;
 	const unsigned char	*ptr = mem;
 	t_word				broadcast;
@@ -70,30 +63,18 @@ void	*ft_memchr(const void *mem, int chr, size_t n)
 	if (n < sizeof(t_word))
 		return (baby_memchr(mem, chr, n));
 	broadcast = (t_word)-1 / 255 * (unsigned char)chr;
-	match = scan_word(ptr, chr, broadcast);
+	match = test_word(ptr, *(t_word *)ptr, chr, broadcast);
 	if (match)
 		return (match);
 	ptr += align;
 	n -= align;
 	while (n >= sizeof(t_word))
 	{
-		match = scan_word(ptr, chr, broadcast);
+		match = test_word(ptr, *(t_aligned_word *)ptr, chr, broadcast);
 		if (match)
 			return (match);
 		ptr += sizeof(t_word);
 		n -= sizeof(t_word);
 	}
-	return (scan_word(end - sizeof(t_word), chr, broadcast));
+	return (test_word(end - sizeof(t_word), *(t_word *)ptr, chr, broadcast));
 }
-
-/**
- * Slow but portable fallback.
- */
-#else
-
-void	*ft_memchr(const void *mem, int chr, size_t n)
-{
-	return (baby_memchr(mem, chr, n));
-}
-
-#endif
