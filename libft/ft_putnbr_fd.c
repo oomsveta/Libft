@@ -10,11 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+
+# include <windows.h>
+#endif
+
 #include <limits.h>	// provides CHAR_BIT
-#include <unistd.h>	// provides write
 #include "libft.h"	// provides ft_abs, ft_putstr_fd
 
-void	ft_putnbr_fd(int n, int fd)
+#if defined(__linux__) || defined(__APPLE__)
+
+void	ft_putnbr_fd(int n, int file)
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+
+void	ft_putnbr_fd(int n, HANDLE file)
+#else
+
+# error "Unsupported target OS"
+
+#endif
+
 {
 	char			buffer[(sizeof(int) * CHAR_BIT - 1) * 28 / 93 + 3];
 	char			*nptr;
@@ -33,5 +48,5 @@ void	ft_putnbr_fd(int n, int fd)
 	{
 		*--nptr = '-';
 	}
-	ft_putstr_fd(nptr, fd);
+	ft_putstr_fd(nptr, file);
 }
