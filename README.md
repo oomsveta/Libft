@@ -21,49 +21,110 @@ I wanted my Libft to be an opportunity to learn advanced aspects of the C langua
 
 The following functions from the standard C library must be reimplemented:
 
-||name|allowed functions|
-|--|--|--|
-|✅|atoi||
-|✅|bzero||
-|✅|calloc|malloc|
-|✅|isalnum||
-|✅|isalpha||
-|✅|isascii||
-|✅|isdigit||
-|✅|isprint||
-|✅|memchr||
-|✅|memcmp||
-|✅|memcpy||
-|✅|memmove||
-|✅|memset||
-|✅|strchr||
-|✅|strdup|malloc|
-|✅|strlcat||
-|✅|strlcpy||
-|✅|strlen||
-|✅|strncmp||
-|✅|strnstr||
-|✅|strrchr||
-|✅|tolower||
-|✅|toupper||
+- [atoi](https://man7.org/linux/man-pages/man3/atoi.3.html)
+- [bzero](https://man7.org/linux/man-pages/man3/bzero.3.html)
+- [calloc](https://man7.org/linux/man-pages/man3/calloc.3.html)
+- [isalnum](https://man7.org/linux/man-pages/man3/isalnum.3.html)
+- [isalpha](https://man7.org/linux/man-pages/man3/isalpha.3.html)
+- [isascii](https://man7.org/linux/man-pages/man3/isascii.3.html)
+- [isdigit](https://man7.org/linux/man-pages/man3/isdigit.3.html)
+- [isprint](https://man7.org/linux/man-pages/man3/isprint.3.html)
+- [memchr](https://man7.org/linux/man-pages/man3/memchr.3.html)
+- [memcmp](https://man7.org/linux/man-pages/man3/memcmp.3.html)
+- [memcpy](https://man7.org/linux/man-pages/man3/memcpy.3.html)
+- [memmove](https://man7.org/linux/man-pages/man3/memmove.3.html)
+- [memset](https://man7.org/linux/man-pages/man3/memset.3.html)
+- [strchr](https://man7.org/linux/man-pages/man3/strchr.3.html)
+- [strdup](https://man7.org/linux/man-pages/man3/strdup.3.html)
+- [strlcat](https://linux.die.net/man/3/strlcat)
+- [strlcpy](https://linux.die.net/man/3/strlcpy)
+- [strlen](https://man7.org/linux/man-pages/man3/strlen.3.html)
+- [strncmp](https://man7.org/linux/man-pages/man3/strncmp.3.html)
+- [strnstr](https://man7.org/linux/man-pages/man3/strnstr.3.html)
+- [strrchr](https://man7.org/linux/man-pages/man3/strrchr.3.html)
+- [tolower](https://man7.org/linux/man-pages/man3/tolower.3.html)
+- [toupper](https://man7.org/linux/man-pages/man3/toupper.3.html)
 
-#### 2. Extra Functions
+#### 2. Custom Functions
 
-Functions that aren't part of the standard library, whose specifications were given in the assignment PDF.
+The following functions aren't part of the standard library. Their specifications were given in the assignment PDF.
 
-||name|allowed functions|
-|--|--|--|
-|✅|ft_itoa|malloc|
-|✅|ft_putchar_fd|write|
-|✅|ft_putendl_fd|write|
-|✅|ft_putnbr_fd|write|
-|✅|ft_putstr_fd|write|
-|✅|ft_split|free, malloc|
-|✅|ft_striteri||
-|✅|ft_strjoin|malloc|
-|✅|ft_strmapi|malloc|
-|✅|ft_strtrim|malloc|
-|✅|ft_substr|malloc|
+|||
+|--|--|
+|**Name**|ft_itoa|
+|**Allowed Functions**|`malloc`|
+|**Prototype**|`char *ft_itoa(int n)`|
+|**Description**|Converts an integer to its string representation, dynamically allocating the required memory.|
+
+|||
+|--|--|
+|**Name**|ft_putchar_fd|
+|**Allowed Functions**|`write`|
+|**Prototype**|`void ft_putchar_fd(char c, int fd)`|
+|**Description**|Writes the given character to the given file descriptor.|
+
+|||
+|--|--|
+|**Name**|ft_putstr_fd|
+|**Allowed Functions**|`write`|
+|**Prototype**|`void ft_putstr_fd(char *s, int fd)`|
+|**Description**|Writes the given string to the given file descriptor.|
+
+|||
+|--|--|
+|**Name**|ft_putendl_fd|
+|**Allowed Functions**|`write`|
+|**Prototype**|`void ft_putendl_fd(char *s, int fd)`|
+|**Description**|Writes the given string followed by a newline to the given file descriptor.|
+
+|||
+|--|--|
+|**Name**|ft_putnbr_fd|
+|**Allowed Functions**|`write`|
+|**Prototype**|`void ft_putnbr_fd(int n, int fd)`|
+|**Description**|Writes the string representation of the given `int` to the given file descriptor.|
+
+|||
+|--|--|
+|**Name**|ft_substr|
+|**Allowed Functions**|`malloc`|
+|**Prototype**|`char *ft_substr(const char *s, unsigned int start, size_t len)`|
+|**Description**|Creates a substring from `s`, starting at index `start`, with a maximum length of `len`.|
+
+|||
+|--|--|
+|**Name**|ft_strjoin|
+|**Allowed Functions**|`malloc`|
+|**Prototype**|`char *ft_strjoin(const char *s1, const char *s2)`|
+|**Description**|Allocates a string containing the concatenation of `s1` and `s2`.|
+
+|||
+|--|--|
+|**Name**|ft_strtrim|
+|**Allowed Functions**|`malloc`|
+|**Prototype**|`char *ft_strtrim(const char *s1, const char *set)`|
+|**Description**|Allocates a string containing `s1` trimmed from the characters in `set`.|
+
+|||
+|--|--|
+|**Name**|ft_split|
+|**Allowed Functions**|`malloc`|
+|**Prototype**|`char **ft_split(const char *s, char c)`|
+|**Description**|Returns an array of strings obtained by splitting `s` using the character `c` as a delimiter.|
+
+|||
+|--|--|
+|**Name**|ft_striteri|
+|**Allowed Functions**||
+|**Prototype**|`void ft_striteri(char *s, void (*f)(unsigned int, char *))`|
+|**Description**|Applies the function `f` to each char of the string `s`.|
+
+|||
+|--|--|
+|**Name**|ft_strmapi|
+|**Allowed Functions**|`malloc`|
+|**Prototype**|`char *ft_strmapi(const char *s, char (*f)(unsigned int, char))`|
+|**Description**|Creates a string containing the result of applying the function `f` to each char of the string `s`.|
 
 #### 3. Linked Lists
 
