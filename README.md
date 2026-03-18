@@ -1,5 +1,10 @@
 *This project has been created as part of the 42 curriculum by lwicket.*
 
+> \- My code is standard-complaint.  
+> \- Did you mean compliant?  
+> \- No  
+> *[@vzverovich](https://x.com/vzverovich) on Twitter, February 10, 2022*
+
 ## ℹ️ Project Overview
 
 > [!WARNING]
@@ -13,7 +18,14 @@ Beyond the educational goal of learning how things work under the hood, reimplem
 
 ### Design Considerations
 
-I wanted my Libft to be an opportunity to learn advanced aspects of the C language, and therefore decided to approach it from the perspective of strict standard compliance and performance.
+I regarded my Libft as an opportunity to dive into the advanced aspects of C, approaching the project with a focus on strict standard compliance and high performance.
+
+In addition to what's normally expected for this project, my Libft features:
+- Strict adherence to the ISO C Standard.
+- High-performance memory functions using "word-at-a-time" operations.
+- Branchless `ctype` functions (pure flex).
+- Cross-compilation support for Windows.
+- Robust Makefile with proper `.h` dependency tracking.
 
 ### Contents
 
@@ -47,98 +59,30 @@ The following functions from the standard C library must be reimplemented:
 
 #### 2. Custom Functions
 
-The following functions aren't part of the standard library. Their specifications were given in the assignment PDF.
+The following functions are not part of the standard C library. Their implementation specifications are defined in the project assignment.
 
-|||
-|--|--|
-|**Name**|ft_itoa|
-|**Allowed Functions**|`malloc`|
-|**Prototype**|`char *ft_itoa(int n)`|
-|**Description**|Converts an integer to its string representation, dynamically allocating the required memory.|
-
-|||
-|--|--|
-|**Name**|ft_putchar_fd|
-|**Allowed Functions**|`write`|
-|**Prototype**|`void ft_putchar_fd(char c, int fd)`|
-|**Description**|Writes the given character to the given file descriptor.|
-
-|||
-|--|--|
-|**Name**|ft_putstr_fd|
-|**Allowed Functions**|`write`|
-|**Prototype**|`void ft_putstr_fd(char *s, int fd)`|
-|**Description**|Writes the given string to the given file descriptor.|
-
-|||
-|--|--|
-|**Name**|ft_putendl_fd|
-|**Allowed Functions**|`write`|
-|**Prototype**|`void ft_putendl_fd(char *s, int fd)`|
-|**Description**|Writes the given string followed by a newline to the given file descriptor.|
-
-|||
-|--|--|
-|**Name**|ft_putnbr_fd|
-|**Allowed Functions**|`write`|
-|**Prototype**|`void ft_putnbr_fd(int n, int fd)`|
-|**Description**|Writes the string representation of the given `int` to the given file descriptor.|
-
-|||
-|--|--|
-|**Name**|ft_substr|
-|**Allowed Functions**|`malloc`|
-|**Prototype**|`char *ft_substr(const char *s, unsigned int start, size_t len)`|
-|**Description**|Creates a substring from `s`, starting at index `start`, with a maximum length of `len`.|
-
-|||
-|--|--|
-|**Name**|ft_strjoin|
-|**Allowed Functions**|`malloc`|
-|**Prototype**|`char *ft_strjoin(const char *s1, const char *s2)`|
-|**Description**|Allocates a string containing the concatenation of `s1` and `s2`.|
-
-|||
-|--|--|
-|**Name**|ft_strtrim|
-|**Allowed Functions**|`malloc`|
-|**Prototype**|`char *ft_strtrim(const char *s1, const char *set)`|
-|**Description**|Allocates a string containing `s1` trimmed from the characters in `set`.|
-
-|||
-|--|--|
-|**Name**|ft_split|
-|**Allowed Functions**|`malloc`|
-|**Prototype**|`char **ft_split(const char *s, char c)`|
-|**Description**|Returns an array of strings obtained by splitting `s` using the character `c` as a delimiter.|
-
-|||
-|--|--|
-|**Name**|ft_striteri|
-|**Allowed Functions**||
-|**Prototype**|`void ft_striteri(char *s, void (*f)(unsigned int, char *))`|
-|**Description**|Applies the function `f` to each char of the string `s`.|
-
-|||
-|--|--|
-|**Name**|ft_strmapi|
-|**Allowed Functions**|`malloc`|
-|**Prototype**|`char *ft_strmapi(const char *s, char (*f)(unsigned int, char))`|
-|**Description**|Creates a string containing the result of applying the function `f` to each char of the string `s`.|
-
-#### 3. Linked Lists
-
-||name|allowed functions|
-|--|--|--|
-|✅|ft_lstadd_back||
-|✅|ft_lstadd_front||
-|✅|ft_lstclear||
-|✅|ft_lstdelone|free|
-|✅|ft_lstiter||
-|✅|ft_lstlast||
-|✅|ft_lstmap||
-|✅|ft_lstnew|malloc|
-|✅|ft_lstsize||
+|Function|Prototype|Allowed|Description|
+|--|--|--|--|
+|`ft_itoa`|`char *ft_itoa(int n)`|`malloc`|Allocates and returns a string representing the integer `n`.|
+|`ft_putchar_fd`|`void ft_putchar_fd(char c, int fd)`|`write`|Outputs the character `c` to the given file descriptor.|
+|`ft_putstr_fd`|`void ft_putstr_fd(char *s, int fd)`|`write`|Outputs the string `s` to the given file descriptor.|
+|`ft_putendl_fd`|`void ft_putendl_fd(char *s, int fd)`|`write`|Outputs the string `s` to the given file descriptor, followed by a newline.|
+|`ft_putnbr_fd`|`void ft_putnbr_fd(int n, int fd)`|`write`|Outputs the integer `n` to the given file descriptor.|
+|`ft_substr`|`char *ft_substr(const char *s, unsigned int start, size_t len)`|`malloc`|Allocates and returns a substring from `s`. The substring begins at index `start` and is of maximum size `len`.|
+|`ft_strjoin`|`char *ft_strjoin(const char *s1, const char *s2)`|`malloc`|Allocates and returns a new string resulting from the concatenation of `s1` and `s2`.|
+|`ft_strtrim`|`char *ft_strtrim(const char *s1, const char *set)`|`malloc`|Allocates and returns a copy of `s1` with the characters specified in `set` removed from the beginning and the end.|
+|`ft_split`|`char **ft_split(const char *s, char c)`|`malloc`|Allocates and returns an array of strings obtained by splitting `s` using the character `c` as a delimiter. The array is NULL-terminated.|
+|`ft_striteri`|`void ft_striteri(char *s, void (*f)(unsigned int, char *))`|*None*|Applies the function `f` to each character of the string `s`, passing its index as the first argument.|
+|`ft_strmapi`|`char *ft_strmapi(const char *s, char (*f)(unsigned int, char))`|`malloc`|Allocates a new string where each character is the result of applying the function `f` to the corresponding character of `s`. The function `f` is passed the character's index as its first argument.|
+|`ft_lstnew`|`t_list *ft_lstnew(void *content)`|`malloc`|Creates a new node with the given content; next is set to NULL.|
+|`ft_lstadd_front`|`void ft_lstadd_front(t_list **lst, t_list *new)`|*None*|Adds `new` node at the beginning of the list.|
+|`ft_lstadd_back`|`void ft_lstadd_back(t_list **lst, t_list *new)`|*None*|Adds `new` node at the end of the list.|
+|`ft_lstsize`|`int ft_lstsize(t_list *lst)`|*None*|Counts the number of nodes in the list.|
+|`ft_lstlast`|`t_list *ft_lstlast(t_list *lst)`|*None*|Returns the last node of the list.|
+|`ft_lstdelone`|`void ft_lstdelone(t_list *lst, void (*del)(void *))`|`free`|Frees a node's content using `del`, then frees the node itself.|
+|`ft_lstclear`|`void ft_lstclear(t_list **lst, void (*del)(void *))`|`free`|Deletes a list and all successors.|
+|`ft_lstiter`|`void ft_lstiter(t_list *lst, void (*f)(void *))`|*None*|Applies `f` to the content of every node in the list.|
+|`ft_lstmap`|`t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))`|`free`, `malloc`|Creates a new list by applying `f` to each node. Uses `del` if allocation fails.|
 
 ## 🛠️ Build & Usage
 
@@ -164,6 +108,18 @@ cd libft/
 make
 ```
 This will produce a `libft.a` archive containing all the compiled `.o` object files, which you can then reuse in other projects.
+
+### Building for Windows
+
+My library supports cross-compilation for Windows via MinGW. First, ensure you have the necessary packages installed:
+```bash
+sudo apt install build-essential binutils-mingw-w64 gcc-mingw-w64
+```
+To compile the library, run the following command:
+```bash
+make windows
+```
+This will produce a `libft.lib` file, which you can then link into your projects targeting Windows.
 
 ### Compiling with libft.a
 
@@ -242,9 +198,9 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 
 ## 🧑‍🔬 Implementation Notes
 
-### Memory Manipulaton Functions
+### Memory Functions
 
-I implemented the memory manipulation functions to handle one word at a time, rather than byte by byte (char by char). I had to overcome two main obstacles:
+I implemented the memory functions to handle one word at a time, rather than byte by byte (char by char). I had to overcome two main obstacles:
 1. **Strict Type Aliasing**: Character types (like `unsigned char`) are the only types allowed to alias anything in Standard C. There is no standard C type the size of a word that wouldn't violate strict aliasing rules.
 2. **Unaligned Memory Access**: In order to minimize branching, my code unconditionally jumps to the next aligned memory boundary, then starts accessing memory word by word. However, the bytes located before that aligned address need to be processed too, as do the leftover bytes at the end of the buffer when the size is not a multiple of the alignment. To handle those, I perform an unaligned access, which is not natively supported on some older architectures.
 
@@ -256,9 +212,29 @@ I didn't use the C23 `alignas` specifier or standard attribute syntax because st
 
 If the GNU extensions aren't available, the memory functions fall back to using an `unsigned char`, which naturally avoids both of the aforementioned problems. All my memory functions were written to adapt themselves to whatever type is defined, meaning the only part of the code that needs to be conditionally compiled behind an `#ifdef` is the `typedef` itself.
 
-### Compiler flags
+#### A Note on `memmove`
 
-#### -O3
+If you want to be completely pedantic, `memmove` is theoretically impossible to implement in a 100% standard-compliant way.
+
+This is because determining if two buffers overlap typically requires comparing their addresses like this:
+```c
+if (dest < src + n && src < dest + n)
+{
+    // Buffers overlap
+}
+```
+However, the C Standard strictly limits when you can relationally compare pointers:
+> **When two pointers are compared, the result depends on the relative locations in the address space of the objects pointed to**. If two pointers to object types **both point to the same object**, or both point one past the last element of the **same array object**, they compare equal. [...] **In all other cases, the behavior is undefined**.
+
+This means that any `<` or `>` comparison between two pointers pointing to completely different objects is technically Undefined Behavior.
+
+This "undefinedness" can be mitigated by first casting the pointers to a `uintptr_t`, since the comparison between two integers is always well-defined. This is the approach my implementation uses.
+
+However, even this isn't universally compliant because it assumes a linear (flat) memory model. On older segmented memory architectures, you might get two completely different integer values that actually point to the exact same physical memory address. In such cases, an integer comparison would fail to catch the overlap.
+
+That said, the segmented memory model is effectively dead in modern computing. On today's flat memory models, it is perfectly safe to assume that comparing two addresses (via `uintptr_t`) will reliably produce the expected behavior.
+
+### -O3 flag
 
 I [already learned](https://github.com/oomsveta/42-Piscine-February-2026/tree/main/rush_02#the--o3-incident) the hard way that `-O3` could totally jeopardize my projects. That said, it was an interesting learning experience, and so I decided to use that flag again 🐱
 
