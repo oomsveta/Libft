@@ -10,9 +10,9 @@
 > [!WARNING]
 > This project is still a work in progress. Its contents, along with the information in this README file, are subject to change.
 
-The **Libft** (where *ft* stands for *Forty-Two*) is the very first project of the [42 School](https://en.wikipedia.org/wiki/42_(school)). It consists of reimplementing various functions from the C Standard Library, along with a few custom ones.
+The **Libft** (where *ft* stands for *Forty-Two*) is the very first project of the [42 School](https://en.wikipedia.org/wiki/42_(school)). It consists of reimplementing various functions from the [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library), along with a few custom ones.
 
-For the first projects of the 42 curriculum, students are not allowed to use any function from the standard library: everything must be reimplemented on top of system calls (`write`, `read`, etc.), with the sole exceptions of `malloc` and `free`.
+For the first projects of the 42 curriculum, students are not allowed to use any function from the standard library: everything must be reimplemented on top of [system calls](https://en.wikipedia.org/wiki/System_call) ([`write`](https://sites.uclouvain.be/SystInfo/manpages/man2/write.2.html), [`read`](https://sites.uclouvain.be/SystInfo/manpages/man2/read.2.html), etc.), with the sole exceptions of [`malloc` and `free`](https://sites.uclouvain.be/SystInfo/manpages/man3/malloc.3.html).
 
 Beyond the educational goal of learning how things work under the hood, reimplementing their own library provides students with a set of functions they can reuse in future projects.
 
