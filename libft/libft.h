@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/13 23:24:28 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/04 14:20:10 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef uintptr_t __attribute__(\
 
 # else
 
-typedef unsigned char							t_word;
-typedef unsigned char							t_aligned_word;
+typedef unsigned char								t_word;
+typedef unsigned char								t_aligned_word;
 
 # endif
 
