@@ -90,7 +90,7 @@ The following functions are not part of the standard C library. Their implementa
 
 - GCC or Clang
 - [`ar`](https://en.wikipedia.org/wiki/Ar_(Unix)) for creating the archive
-- [C99](https://en.cppreference.com/w/c/99.html) support
+- [C23](https://en.cppreference.com/w/c/23.html) support
 - A UNIX-like system (such as Linux or macOS)
 
 As per the assignment, the code is compiled using `cc`. It is not specified which compiler `cc` refers to, but it is safe to assume that it will be either GCC or Clang.
@@ -98,7 +98,8 @@ As per the assignment, the code is compiled using `cc`. It is not specified whic
 > [!TIP]
 > At the time I wrote this, on the Brussels campus, whether `cc` points to GCC or Clang actually varies from one machine to another.
 
-My project relies on features from C99 (compound literals, inline functions, single-line comments and `stdbool.h`).
+~~My project relies on features from C99 (compound literals, inline functions, single-line comments and `stdbool.h`).~~  
+My project makes use of the `[[nodiscard]]` attribute introduced in C23. Other than that, it doesn't leverage any feature newer than C99.
 
 ### Building the library
 
@@ -285,12 +286,19 @@ https://gcc.gnu.org/onlinedocs/gcc-3.3/gcc/Type-Attributes.html
 
 ### Type Aliasing
 
+> ~~Science~~ *THE C STANDARD*, already oppressive with its shocking revelations, will perhaps be the ultimate exterminator of our human species - if separate species we be - for its reserve of unguessed horrors could never be borne by mortal brains if loosed upon the world  
+> ― *H.P. Lovecraft* 
+
+Type aliasing is that kind of cursed knowledge you almost wish you had never learned about. Because now you see problems in code you never suspected was broken, and you won't be able to resist the urge to fix them. Even though the odds of this ever coming back to bite you are close to zero.
+
+Understanding the aliasing rules led me to rewrite my memory functions to make them (hopefully) portable. The following two articles were helpful in understanding the concept:
+
 - [N3519 Understanding Effective Type Aliasing in C](https://www.open-std.org/jtc1/sc22/WG14/www/docs/n3519.pdf) by Eskil Steenberg
 - [The joys and perils of C and C++ aliasing](https://developers.redhat.com/blog/2020/06/02/the-joys-and-perils-of-c-and-c-aliasing-part-1) by Martin Sebor
 
 ### Linus' Good Taste
 
-In a famous TED interview, Linus Torvalds demonstrates an approach to implementing linked list functions that he considers "good taste" in coding. This was particularly helpful when implementing functions that modify the head pointer. The following repository was a great help in understanding the concept: https://github.com/mkirchner/linked-list-good-taste
+In a famous TED interview, Linus Torvalds demonstrates an approach to implementing linked-list functions that he considers "good taste" in coding. This used to be particularly helpful during my Piscine, but not so much when writing this library, unfortunately. I still used it to implement `lstmap`, though, so I guess it's still fair game to list it here. The following repository was a great help in understanding the concept: https://github.com/mkirchner/linked-list-good-taste
 
 ### ChatGPT 5.3(?)
 
