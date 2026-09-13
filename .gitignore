@@ -10,7 +10,7 @@
 # build leftovers
 libft.a
 libft.lib
-a.out
+*.out
 *.d
 *.o
 
