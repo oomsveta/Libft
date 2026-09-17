@@ -303,3 +303,7 @@ In a famous TED interview, Linus Torvalds demonstrates an approach to implementi
 ### ChatGPT 5.3(?)
 
 This entire project has been handcrafted by a human (yours truly), but proofread by AI. Many thanks to the free version of ChatGPT for fixing my grammar and providing feedback on my cursed code!
+
+### Gemini Flash 3.6
+
+Gemini Flash 3.6 was used to help write unit tests.
