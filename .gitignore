@@ -6,6 +6,7 @@
 
 # macOS
 .DS_Store
+*.dSYM
 
 # build leftovers
 libft.a
