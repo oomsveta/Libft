@@ -32,7 +32,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(AR) rcs $@ $^
 
-%.o: %.c
+$(OBJ): %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
