@@ -6,9 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 18:54:04 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 18:53:46 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/19 23:26:27 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 static inline int	ft_islower(int c)
 {

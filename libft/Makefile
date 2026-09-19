@@ -3,7 +3,7 @@ NAME = libft.a
 CC := cc
 AR ?= ar
 
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes
 CPPFLAGS := -MMD -MP
 
 ifdef WINDOWS

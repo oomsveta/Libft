@@ -6,11 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:05:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:42:29 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/19 23:25:31 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>	// provides NULL, size_t
+#include "libft.h"
 
 char	*ft_strchr(const char *str, int chr)
 {

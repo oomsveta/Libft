@@ -6,9 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:32:51 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/13 12:19:04 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/19 23:25:02 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 #if defined(__linux__) || defined(__APPLE__)
 
