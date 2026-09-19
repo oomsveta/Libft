@@ -1,5 +1,13 @@
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
+LDFLAGS :=
+
+CAN_WRAP_MALLOC := $(shell echo 'int main(){}' | $(CC) -Wl,--wrap=malloc -x c - -o /dev/null 2>/dev/null && echo 1 || echo 0)
+
+ifeq ($(CAN_WRAP_MALLOC),1)
+    CFLAGS  += -DCAN_WRAP_MALLOC
+    LDFLAGS += -Wl,--wrap=malloc
+endif
 
 LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
@@ -38,7 +46,7 @@ compile_commands.json: fclean
 	ruby $(UNITY_AUTO)/generate_test_runner.rb $< $@
 
 %.out: %.c %_runner.c $(UNITY_OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $^ -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) $^ $(LDFLAGS) -o $@
 
 test: $(TEST_BINS)
 	@for bin in $(TEST_BINS); do \
