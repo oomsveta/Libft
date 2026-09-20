@@ -13,10 +13,12 @@ LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
 
 TEST_DIR := tests
-UNITY_DIR := $(TEST_DIR)/unity/src
-UNITY_AUTO := $(TEST_DIR)/unity/auto
+CMOCK_DIR := $(TEST_DIR)/cmock
+UNITY_DIR := $(CMOCK_DIR)/vendor/unity
+UNITY_SRC := $(UNITY_DIR)/src
+UNITY_AUTO := $(UNITY_DIR)/auto
 
-INCLUDES := -I$(LIBFT_DIR) -I$(UNITY_DIR)
+INCLUDES := -I$(LIBFT_DIR) -I$(UNITY_SRC)
 
 TEST_SRCS := $(filter-out %_runner.c, $(wildcard $(TEST_DIR)/test_*.c))
 
@@ -36,7 +38,7 @@ $(LIBFT): FORCE
 
 FORCE:
 
-$(UNITY_OBJ): $(UNITY_DIR)/unity.c
+$(UNITY_OBJ): $(UNITY_SRC)/unity.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 compile_commands.json: fclean
