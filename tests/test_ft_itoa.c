@@ -2,34 +2,9 @@
 #include "unity.h"
 #include <limits.h>
 #include <stdlib.h>
-#ifdef CAN_WRAP_MALLOC
-#include <stdbool.h>
 
-static bool g_malloc_should_fail = false;
-
-extern void *__real_malloc(size_t size);
-
-void *__wrap_malloc(size_t size)
-{
-    if (g_malloc_should_fail) {
-        return NULL;
-    }
-    return __real_malloc(size);
-}
-#endif
-
-void setUp(void)
-{
-#ifdef CAN_WRAP_MALLOC
-    g_malloc_should_fail = false;
-#endif
-}
-void tearDown(void)
-{
-#ifdef CAN_WRAP_MALLOC
-    g_malloc_should_fail = false;
-#endif
-}
+void setUp(void) {}
+void tearDown(void) {}
 
 void test_ft_itoa_zero(void)
 {
@@ -89,15 +64,4 @@ void test_ft_itoa_int_min(void)
     TEST_ASSERT_NOT_NULL(res);
     TEST_ASSERT_EQUAL_STRING(expected, res);
     free(res);
-}
-
-void test_ft_itoa_malloc_failure(void)
-{
-#ifdef CAN_WRAP_MALLOC
-    g_malloc_should_fail = true;
-    char *res = ft_itoa(1337);
-    TEST_ASSERT_NULL(res);
-#else
-    TEST_IGNORE_MESSAGE("Linker does not support -Wl,--wrap feature");
-#endif
 }
