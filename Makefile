@@ -2,6 +2,13 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 LDFLAGS :=
 
+CAN_WRAP_MALLOC := $(shell echo 'int main(){}' | $(CC) -Wl,--wrap=malloc -x c - -o /dev/null 2>/dev/null && echo 1 || echo 0)
+
+ifeq ($(CAN_WRAP_MALLOC),1)
+    CFLAGS  += -DCAN_WRAP_MALLOC
+    LDFLAGS += -Wl,--wrap=malloc
+endif
+
 LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
 
