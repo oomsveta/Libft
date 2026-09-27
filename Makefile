@@ -1,52 +1,25 @@
-CC := cc
-CFLAGS := -Wall -Wextra -Werror
-LDFLAGS :=
-
-CAN_WRAP_MALLOC := $(shell echo 'int main(){}' | $(CC) -Wl,--wrap=malloc -x c - -o /dev/null 2>/dev/null && echo 1 || echo 0)
-
-ifeq ($(CAN_WRAP_MALLOC),1)
-    CFLAGS  += -DCAN_WRAP_MALLOC
-    LDFLAGS += -Wl,--wrap=malloc
-endif
+CC      := cc
+CFLAGS  := -Wall -Wextra -Werror
 
 LIBFT_DIR := libft
-LIBFT := $(LIBFT_DIR)/libft.a
+LIBFT     := $(LIBFT_DIR)/libft.a
 
-TEST_DIR := tests
-UNITY_DIR := $(TEST_DIR)/unity/src
-UNITY_AUTO := $(TEST_DIR)/unity/auto
-
-INCLUDES := -I$(LIBFT_DIR) -I$(UNITY_DIR)
-
-TEST_SRCS := $(filter-out %_runner.c, $(wildcard $(TEST_DIR)/test_*.c))
-
-RUNNERS := $(TEST_SRCS:.c=_runner.c)
-TEST_BINS := $(TEST_SRCS:.c=.out)
-
-UNITY_OBJ := $(TEST_DIR)/unity.o
+TEST_DIR            := tests
+TEST_SRCS           := $(filter-out %_runner.c, $(wildcard $(TEST_DIR)/test_*.c))
+TEST_BINS           := $(TEST_SRCS:.c=.out)
+UNITY_DIR           := $(TEST_DIR)/unity
+UNITY_SRC           := $(UNITY_DIR)/src
+UNITY_OBJ           := $(TEST_DIR)/unity.o
+UNITY_AUTO          := $(UNITY_DIR)/auto
+INCLUDES            := -I$(LIBFT_DIR) -I$(UNITY_SRC) -I$(TEST_DIR)
+MALLOC_MOCK_HDR     := $(TEST_DIR)/malloc_mock.h
+MALLOC_OVERRIDE_HDR := $(TEST_DIR)/malloc_override.h
+MALLOC_MOCK_OBJ     := $(TEST_DIR)/malloc_mock.o
+MOCKED_FUNCS        := ft_calloc ft_strjoin ft_strmapi ft_itoa ft_strdup
+MOCKED_OBJS         := $(addprefix $(TEST_DIR)/, $(addsuffix _mocked.o, $(MOCKED_FUNCS)))
+RUNNERS             := $(TEST_SRCS:.c=_runner.c)
 
 all: $(TEST_BINS)
-
-# We want the sub-make to be called every time to ensure Libft is up-to-date,
-# which is why we use a FORCE target. We can't use .PHONY because it would
-# bypass timestamp checks altogether for any rule depending on libft.a, causing
-# them to relink unnecessarily.
-$(LIBFT): FORCE
-	$(MAKE) -C $(LIBFT_DIR)
-
-FORCE:
-
-$(UNITY_OBJ): $(UNITY_DIR)/unity.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-compile_commands.json: fclean
-	bear -- $(MAKE) test
-
-%_runner.c: %.c
-	ruby $(UNITY_AUTO)/generate_test_runner.rb $< $@
-
-%.out: %.c %_runner.c $(UNITY_OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $^ $(LDFLAGS) -o $@
 
 test: $(TEST_BINS)
 	@for bin in $(TEST_BINS); do \
@@ -54,13 +27,36 @@ test: $(TEST_BINS)
 		./$$bin || exit 1; \
 	done
 
+compile_commands.json: fclean
+	bear -- $(MAKE) test
+
+$(LIBFT): FORCE
+	@$(MAKE) -C $(LIBFT_DIR)
+
+FORCE:
+
+$(UNITY_OBJ): $(UNITY_SRC)/unity.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(MALLOC_MOCK_OBJ): $(TEST_DIR)/malloc_mock.c $(MALLOC_MOCK_HDR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(TEST_DIR)/%_mocked.o: $(LIBFT_DIR)/%.c $(MALLOC_OVERRIDE_HDR)
+	$(CC) $(CFLAGS) $(INCLUDES) -include $(MALLOC_OVERRIDE_HDR) -c $< -o $@
+
+%_runner.c: %.c
+	@ruby $(UNITY_AUTO)/generate_test_runner.rb $< $@
+
+%.out: %.c %_runner.c $(UNITY_OBJ) $(MALLOC_MOCK_OBJ) $(MOCKED_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $^ -o $@
+
 clean:
-	$(RM) $(TEST_BINS) $(RUNNERS) $(UNITY_OBJ)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	$(RM) $(TEST_BINS) $(RUNNERS) $(UNITY_OBJ) $(MOCKED_OBJS) $(MALLOC_MOCK_OBJ)
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all test clean fclean re
+.PHONY: all test clean fclean re FORCE

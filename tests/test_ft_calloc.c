@@ -1,34 +1,15 @@
 #include "libft.h"
+#include "malloc_mock.h"
 #include "unity.h"
-#include <stdlib.h>
-
-#ifdef CAN_WRAP_MALLOC
-#include <stdbool.h>
-
-static bool g_malloc_should_fail = false;
-
-extern void *__real_malloc(size_t size);
-
-void *__wrap_malloc(size_t size)
-{
-    if (g_malloc_should_fail) {
-        return NULL;
-    }
-    return __real_malloc(size);
-}
-#endif
 
 void setUp(void)
 {
-#ifdef CAN_WRAP_MALLOC
-    g_malloc_should_fail = false;
-#endif
+    malloc_mock_reset();
 }
+
 void tearDown(void)
 {
-#ifdef CAN_WRAP_MALLOC
-    g_malloc_should_fail = false;
-#endif
+    malloc_mock_reset();
 }
 
 void test_ft_calloc_basic(void)
@@ -90,14 +71,7 @@ void test_ft_calloc_large_allocation(void)
 
 void test_ft_calloc_malloc_failure(void)
 {
-#ifdef CAN_WRAP_MALLOC
-    g_malloc_should_fail = true;
-    char *res = ft_strjoin("will", "fail");
-    TEST_ASSERT_NULL(res);
-#else
-    // Requests ~1 exabyte so that malloc fails.
-    // Wrapping malloc is cleaner, but it isn't supported on macOS.
-    void *ptr = ft_calloc(1e9, 1e9);
+    malloc_mock_failure(true);
+    void *ptr = ft_calloc(1, 4);
     TEST_ASSERT_NULL(ptr);
-#endif
 }
