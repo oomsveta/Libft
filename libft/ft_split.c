@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 20:28:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/04 14:15:36 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/28 10:40:09 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	free_all(char *words[], size_t len)
 	while (i < len)
 	{
 		free(words[i]);
+		i += 1;
 	}
 	free(words);
 }
