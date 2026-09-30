@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:02:21 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/30 17:42:00 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:44:18 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_isalpha(int c)
 {
-	return (((unsigned int)c | 0x20) - 'a' < 26U);
+	return (((unsigned int)c | 0x20U) - 'a' < 26U);
 }
