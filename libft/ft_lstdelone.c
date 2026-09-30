@@ -15,10 +15,6 @@
 
 void	ft_lstdelone(t_list *node, void (*delete_fn)(void *))
 {
-	if (!node)
-	{
-		return ;
-	}
 	delete_fn(node->content);
 	free(node);
 }
