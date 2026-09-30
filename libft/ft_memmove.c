@@ -6,11 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 09:22:10 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 19:47:30 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:22:13 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides ft_memcpy, size_t
+#include <stddef.h>	// provides size_t
+#include <stdint.h>	// provides uintptr_t
+#include "libft.h"	// provides ft_memcpy
 
 static inline void	*copy_ascending(
 	unsigned char *dest, const unsigned char *src, size_t n

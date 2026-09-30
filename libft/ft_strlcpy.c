@@ -6,10 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:24:04 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:45:13 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:05:06 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>	// provides size_t
 #include "libft.h"	// provides ft_strlen
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)

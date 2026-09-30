@@ -6,12 +6,12 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:55:37 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/04 14:13:05 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:03:57 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// provides ft_strchr, ft_strlen, ft_strspn, ft_substr, size_t
-#include "libft.h"
+#include <stddef.h>	// provides size_t
+#include "libft.h"	// provides ft_strchr, ft_strlen, ft_strspn, ft_substr
 
 [[nodiscard]]
 char	*ft_strtrim(const char *str, const char *chars)

@@ -6,11 +6,12 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 16:57:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/12 21:36:07 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:05:54 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides ft_strlen, ft_strncmp, NULL, size_t
+#include <stddef.h>	// provides NULL, size_t
+#include "libft.h"	// provides ft_strlen, ft_strncmp
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {

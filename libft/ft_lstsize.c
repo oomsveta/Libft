@@ -6,10 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 18:09:08 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/07 18:14:59 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:23:53 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>	// provides NULL, size_t
 #include "libft.h"	// provides NULL, size_t, t_list
 
 int	ft_lstsize(t_list *lst)

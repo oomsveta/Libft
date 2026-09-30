@@ -6,11 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:03:42 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/13 12:27:36 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:22:56 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides size_t, uintptr_t, t_aligned_word, t_word
+#include <stddef.h>	// provides size_t
+#include <stdint.h>	// provides uintptr_t
+#include "libft.h"	// provides t_aligned_word, t_word
 
 static inline int	byte_by_byte_memcmp(
 	const unsigned char *s1, const unsigned char *s2, size_t n

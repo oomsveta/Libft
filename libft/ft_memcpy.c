@@ -6,11 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 21:14:43 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/13 12:28:07 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:22:23 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides size_t, t_aligned_word, t_word
+#include <stddef.h>	// provides size_t
+#include <stdint.h>	// provides uintptr_t
+#include "libft.h"	// provides t_aligned_word, t_word
 
 static inline void	baby_memcpy(
 	unsigned char *dest, const unsigned char *src, size_t n

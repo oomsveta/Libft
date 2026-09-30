@@ -6,11 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:09:12 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/13 15:35:21 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:24:26 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"	// provides ft_memset, size_t, t_word
+#include <stddef.h>	// provides size_t
+#include <stdint.h>	// provides uintptr_t
+#include "libft.h"	// provides ft_memset, t_word
 
 /**
  * 1. Unconditionally write an unaligned word of zeros at the start and end.
