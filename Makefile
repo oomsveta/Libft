@@ -15,7 +15,7 @@ INCLUDES            := -I$(LIBFT_DIR) -I$(UNITY_SRC) -I$(TEST_DIR)
 MALLOC_MOCK_HDR     := $(TEST_DIR)/malloc_mock.h
 MALLOC_OVERRIDE_HDR := $(TEST_DIR)/malloc_override.h
 MALLOC_MOCK_OBJ     := $(TEST_DIR)/malloc_mock.o
-MOCKED_FUNCS        := ft_calloc ft_strjoin ft_strmapi ft_itoa ft_strdup
+MOCKED_FUNCS        := ft_calloc ft_strjoin ft_strmapi ft_itoa ft_strdup ft_split ft_substr ft_lstnew ft_lstmap
 MOCKED_OBJS         := $(addprefix $(TEST_DIR)/, $(addsuffix _mocked.o, $(MOCKED_FUNCS)))
 RUNNERS             := $(TEST_SRCS:.c=_runner.c)
 
