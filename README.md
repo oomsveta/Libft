@@ -260,6 +260,16 @@ To solve this, one might be tempted to use a larger signed type, such as `long`,
 
 Therefore, the only strictly portable way to safely accumulate digits and support `INT_MIN` is to use an `unsigned int` for the accumulator. Unsigned arithmetic is guaranteed by the Standard never to overflow (it operates using modulo arithmetic), and an `unsigned int` is perfectly capable of holding the absolute value of `INT_MIN` before the final sign logic is applied.
 
+### List functions and NULL heads
+
+Many list functions operate on a "head", that is, a pointer to the variable holding the address of the first node of the list. The assignment doesn't mention the behavior a function like `ft_lstadd_back` should have if a null pointer is provided for the head.
+
+I've seen a few fellow students' implementations [guarding](https://en.wikipedia.org/wiki/Guard_(computer_science)) the head, so that if it is `NULL`, the function just returns and does nothing. I strongly advocate against doing this. There is not a single legitimate situation where a null pointer should end up there. The head is essentially always computed using the address-of (`&`) operator, which will never yield `NULL` in any realistic scenario.
+
+If `NULL` is passed as the head, it can only stem from a critical programming error or crafted malicious input, both of which I'd rather catch sooner than later. Guarding against it merely silences the error. It hides the bug rather than solving it, propagating the bad state downstream until the program eventually crashes or exhibits nonsensical behavior. By then, the origin of the bug is much harder to track down because it was silently passed from function call to function call.
+
+TL;DR: I don't guard the head. It makes no sense. It hides bugs. It silently corrupts your whole program. Don't do that.
+
 ## 📚 References & Acknowledgments
 
 ### ISO/IEC 9899:2024 aka C23
