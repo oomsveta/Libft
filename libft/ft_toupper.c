@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 18:54:04 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/19 23:26:27 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:42:00 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static inline int	ft_islower(int c)
 {
-	return ((unsigned int)c - 'a' < 26u);
+	return ((unsigned int)c - 'a' < 26U);
 }
 
 int	ft_toupper(int c)

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:22:17 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/19 23:24:38 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/09/30 17:42:00 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_isdigit(int c)
 {
-	return ((unsigned int)c - '0' < 10u);
+	return ((unsigned int)c - '0' < 10U);
 }
