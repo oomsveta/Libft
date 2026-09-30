@@ -19,6 +19,13 @@ MOCKED_FUNCS        := ft_calloc ft_strjoin ft_strmapi ft_itoa ft_strdup ft_spli
 MOCKED_OBJS         := $(addprefix $(TEST_DIR)/, $(addsuffix _mocked.o, $(MOCKED_FUNCS)))
 RUNNERS             := $(TEST_SRCS:.c=_runner.c)
 
+UNAME_S := $(shell uname -s)
+CLANG_TIDY_FLAGS :=
+ifeq ($(UNAME_S),Darwin)
+    MAC_SDK := $(shell xcrun --show-sdk-path)
+    CLANG_TIDY_FLAGS += -isysroot $(MAC_SDK)
+endif
+
 all: $(TEST_BINS)
 
 test: $(TEST_BINS)
@@ -59,4 +66,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all test clean fclean re FORCE
+tidy:
+	clang-tidy $$(find $(LIBFT_DIR) -type f -name "*.c") -- $(CLANG_TIDY_FLAGS)
+
+.PHONY: all test clean fclean re tidy FORCE
