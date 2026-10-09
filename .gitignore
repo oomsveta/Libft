@@ -14,6 +14,7 @@ libft.lib
 *.out
 *.d
 *.o
+*.thinlto.bc
 
 # clangd
 .cache
@@ -24,3 +25,6 @@ compile_commands.json
 
 # ctags
 tags
+
+# pyenv
+.python-version
