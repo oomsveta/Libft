@@ -48,7 +48,7 @@ void test_ft_split_empty_string(void)
 
 void test_ft_split_malloc_fail_array(void)
 {
-    malloc_mock_fail_after(1);
+    malloc_mock_failure(true);
     char **res = ft_split("💣💥", ' ');
 
     TEST_ASSERT_NULL(res);
