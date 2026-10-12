@@ -1,0 +1,20 @@
+name: Norminette
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  check-norminette:
+    name: Norminette
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Norminette
+        uses: 42School/norminette@master
+        with:
+          args: 'libft/*.c libft/*.h'
