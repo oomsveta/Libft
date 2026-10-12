@@ -3,8 +3,14 @@ name: Norminette
 on:
   push:
     branches: [ "**" ]
+    paths:
+      - 'libft/**/*.c'
+      - 'libft/**/*.h'
   pull_request:
     branches: [ "**" ]
+    paths:
+      - 'libft/**/*.c'
+      - 'libft/**/*.h'
 
 jobs:
   check-norminette:
