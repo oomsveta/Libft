@@ -4,11 +4,15 @@
 #include <limits.h>
 #include <stdio.h>
 
+// Unity's test runner generator script copies all include directives blindly,
+// ignoring any surrounding conditionals. The trick below prevents the script
+// from unconditionally including xlocale.h, which would fail on Linux systems.
 #if defined(__APPLE__)
-#include <xlocale.h>
+# define LOCALE_H_NAME <xlocale.h>
 #else
-#include <locale.h>
+# define LOCALE_H_NAME <locale.h>
 #endif
+#include LOCALE_H_NAME
 
 void setUp(void) {}
 void tearDown(void) {}
