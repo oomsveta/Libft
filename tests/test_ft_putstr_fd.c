@@ -18,7 +18,7 @@ void test_ft_putstr_fd_basic(void)
 
     close(write_end);
 
-    char buffer[16];
+    char buffer[16] = {0};
     TEST_ASSERT_EQUAL_INT(strlen(str), read(read_end, buffer, sizeof buffer));
     TEST_ASSERT_EQUAL_STRING(str, buffer);
 
