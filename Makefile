@@ -42,6 +42,9 @@ $(LIBFT): FORCE
 
 FORCE:
 
+$(UNITY_DIR):
+	git submodule update --init --recursive
+
 $(UNITY_OBJ): $(UNITY_SRC)/unity.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
