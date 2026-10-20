@@ -5,7 +5,7 @@
 > \- No  
 > *[@vzverovich](https://x.com/vzverovich) on Twitter, February 10, 2022*
 
-## ℹ️ Project Overview
+## ℹ️ Description
 
 > [!WARNING]
 > This branch contains a stripped-down version of the project. It has been reorganized to match the expected structure of the assignment. Among other things, the test suite has been removed. See the main branch for the full, unabridged code.
@@ -86,7 +86,7 @@ The following functions are not part of the standard C library. Their implementa
 |`ft_lstiter`|`void ft_lstiter(t_list *lst, void (*f)(void *))`|*None*|Applies `f` to the content of every node in the list.|
 |`ft_lstmap`|`t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))`|`free`, `malloc`|Creates a new list by applying `f` to each node. Uses `del` if allocation fails.|
 
-## 🛠️ Build & Usage
+## 🛠️ Instructions
 
 ### Requirements
 
@@ -304,7 +304,7 @@ If `NULL` is passed as the head, it can only stem from a critical programming er
 
 TL;DR: I don't guard the head. It makes no sense. It hides bugs. It silently corrupts your whole program. Don't do that.
 
-## 📚 References & Acknowledgments
+## 📚 Resources
 
 ### ISO/IEC 9899:2024 aka C23
 
