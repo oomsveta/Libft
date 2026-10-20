@@ -14,18 +14,20 @@ The **Libft** (where *ft* stands for *Forty-Two*) is the very first project of t
 
 For the first projects of the 42 curriculum, students are not allowed to use any function from the standard library: everything must be reimplemented on top of [system calls](https://en.wikipedia.org/wiki/System_call) ([`write`](https://sites.uclouvain.be/SystInfo/manpages/man2/write.2.html), [`read`](https://sites.uclouvain.be/SystInfo/manpages/man2/read.2.html), etc.), with the sole exceptions of [`malloc` and `free`](https://sites.uclouvain.be/SystInfo/manpages/man3/malloc.3.html).
 
-Beyond the educational goal of learning how things work under the hood, reimplementing their own library provides students with a set of functions they can reuse in future projects.
+Beyond the evident goal of learning how things work under the hood, reimplementing their own library provides students with a set of functions they can reuse in future projects.
 
 ### Design Considerations
 
-I regarded my Libft as an opportunity to dive into the advanced aspects of C, approaching the project with a focus on strict standard compliance and high performance.
+As an already seasoned developer, I wanted to make as much as I could out of this relatively small project, spending a lot of time and brainpower on seemingly tiny details.
 
 In addition to what's normally expected for this project, my Libft features:
-- Strict adherence to the ISO C Standard.
-- High-performance memory functions using "word-at-a-time" operations.
-- Branchless `ctype` functions (pure flex).
-- Cross-compilation support for Windows.
-- Robust Makefile with proper `.h` dependency tracking.
+- **Strict compliance to the ISO C Standard**
+- **Portability** (best effort): I made my code run on Linux, macOS (ARM), and Windows! I was careful only to rely on aspects that are well-defined by the Standard. As far as I know, the only deviation from this rule is my implementation of `memmove`, which assumes a linear memory model.
+- **Legacy(?) performance tricks**: "SWAR" memory functions and branchless `ctype` functions. Memory functions, in particular, were a headache to implement without breaking the portability requirements.
+- **Full test suite** based on the [Unity test framework](https://www.throwtheswitch.org/unity). Incidentally, this introduced me to the concept of [vendoring](https://stackoverflow.com/questions/26217488/what-is-vendoring) in a language without a package manager.
+- A totally overkill Makefile with **proper dependency tracking**. I had a lot of fun learning about all the features of Makefiles and trying to cram as many as possible into my project
+
+I had to get a little crafty at times to make it all work while complying to 42's Norm. 
 
 ### Contents
 
@@ -201,13 +203,13 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 
 ### Memory Functions
 
-I implemented the memory functions to handle one word at a time, rather than byte by byte (char by char). I had to overcome two main obstacles:
+I implemented the memory functions so that they could handle one word at a time, rather than processing buffers byte by byte (char by char). This, because of the portability goal I set myself, led to two big problems:
 1. **Strict Type Aliasing**: Character types (like `unsigned char`) are the only types allowed to alias anything in Standard C. There is no standard C type the size of a word that wouldn't violate strict aliasing rules.
-2. **Unaligned Memory Access**: In order to minimize branching, my code unconditionally jumps to the next aligned memory boundary, then starts accessing memory word by word. However, the bytes located before that aligned address need to be processed too, as do the leftover bytes at the end of the buffer when the size is not a multiple of the alignment. To handle those, I perform an unaligned access, which is not natively supported on some older architectures.
+2. **Unaligned Memory Access**: In order to minimize branching (i.e. avoid looping until memory is aligned), my code unconditionally jumps to the next aligned memory boundary, then starts accessing memory word by word. However, the bytes located before that aligned address need to be processed too, as do the leftover bytes at the end of the buffer when the size is not a multiple of the alignment. To handle those, my implementation performs an unaligned access, which is not natively supported on some older architectures.
 
 Both problems were solved using [GNU type attributes](https://gcc.gnu.org/onlinedocs/gcc-3.3/gcc/Type-Attributes.html):
 1. `__may_alias__`: Tells the compiler that this type may alias another, ensuring it won't make assumptions based on strict aliasing rules or accidentally optimize out important instructions.
-2. `aligned (n)`: Tells the compiler that this type is aligned to n bytes. Setting an alignment requirement of 1 doesn't change the size of my word-sized type, but it explicitly permits unaligned access. This allows architectures that support unaligned writes to do them in one go, while safely breaking them down into separate byte instructions under the hood on architectures that don't.
+2. `aligned (n)`: Tells the compiler that this type is aligned to n bytes. Setting an alignment requirement of 1 doesn't change the size of my word-sized type, but it explicitly permits unaligned access. This allows architectures that support unaligned writes to do them in one go, while safely breaking them down into separate byte instructions on architectures that don't.
 
 I didn't use the C23 `alignas` specifier or standard attribute syntax because standard alignment specifiers cannot be applied to `typedef`s (only to variables and struct/union members), and standard attribute support on `typedef`s remains inconsistent across compilers.
 
@@ -215,9 +217,17 @@ If the GNU extensions aren't available, the memory functions fall back to using 
 
 #### A Note on `memmove`
 
-If you want to be completely pedantic, `memmove` is theoretically impossible to implement in a 100% standard-compliant way.
+The Standard definition of `memmove` has a wording that may seem a little odd at first glance:
 
-This is because determining if two buffers overlap typically requires comparing their addresses like this:
+> Copying takes place *as if the n characters from the object pointed to by s2 are first copied into a temporary array of n characters* that does not overlap the objects pointed to by s1 and s2, and then the n characters from the temporary array are copied into the object pointed to by s1.
+
+The reason it's worded like that is that simply copying memory like `memcpy` would can lead to problems if the destination and source are part of the same object. A concrete example is shifting a buffer to the right. If the source and destination overlap, part of the source is located where the copy will happen. Therefore, writing to the destination would corrupt the source!
+
+The usual way to handle this is to copy bytes backwards when the destination starts after the source and both overlap. That way, you ensure you only overwrite bytes that have already been copied.
+
+If you want to be completely pedantic, though, `memmove` is theoretically impossible to implement in a 100% standard-compliant way.
+
+This is because determining whether two buffers overlap typically requires comparing their addresses like this:
 ```c
 if (dest < src + n && src < dest + n)
 {
@@ -227,13 +237,50 @@ if (dest < src + n && src < dest + n)
 However, the C Standard strictly limits when you can relationally compare pointers:
 > **When two pointers are compared, the result depends on the relative locations in the address space of the objects pointed to**. If two pointers to object types **both point to the same object**, or both point one past the last element of the **same array object**, they compare equal. [...] **In all other cases, the behavior is undefined**.
 
-This means that any `<` or `>` comparison between two pointers pointing to completely different objects is technically Undefined Behavior.
+This means that any < or > comparison between two pointers pointing to completely different objects is technically Undefined Behavior™️.
 
-This "undefinedness" can be mitigated by first casting the pointers to a `uintptr_t`, since the comparison between two integers is always well-defined. This is the approach my implementation uses.
+This undefinedness can be mitigated by first casting the pointers to a `uintptr_t`, since the comparison between two integers is always well-defined.
 
-However, even this isn't universally compliant because it assumes a linear (flat) memory model. On older segmented memory architectures, you might get two completely different integer values that actually point to the exact same physical memory address. In such cases, an integer comparison would fail to catch the overlap.
+However, even this isn't universally compliant because it assumes a linear (flat) memory model. On older segmented memory architectures, you might get two completely different integer values that actually point to the exact same physical memory address. In such cases, an integer comparison would fail to detect the overlap.
 
-That said, the segmented memory model is effectively dead in modern computing. On today's flat memory models, it is perfectly safe to assume that comparing two addresses (via `uintptr_t`) will reliably produce the expected behavior.
+That said, the segmented memory model is kind of dead nowadays. So dead, in fact, that assuming a flat memory model and comparing pointer addresses should be fine in 99.999999999% of cases. Even really strict libc implementations like musl libc have been doing exactly that. There's just no way to do it that would be both absolutely portable and performant at the same time.
+
+### The case of `errno`
+
+At the time I'm writing this, there is a bug in the Moulinette code that will flag using `errno` as cheating. Long story short, in order to enable thread safety while keeping backward compatibility with existing code, `errno` is usually implemented as a macro that expands to a call to a function returning a thread-local variable.
+
+But this is a problem because 42's exercises have a strict set of allowed functions. The way it works is that it compares the symbols in your compiled objects against a whitelist of allowed functions. This whitelist contains the functions allowed within the scope of the exercise, plus a few internal functions emitted by the compiler. If it detects anything that's neither on the whitelist nor defined by one of your objects, you get a -42 grade.
+
+Historically, the school has been using macOS, where the location of `errno` is retrieved by a function called `__error`. As far as I can tell, this function is in the permanent whitelist of the Moulinette. The thing is, around 2024, 42 transitioned from macOS to Linux, but on Linux, this function is named `__errno_location` instead of `__error`. The pedagogical team forgot to update the whitelist, and `errno` now gets flagged as a forbidden function.
+
+This means we can't use it in our project. Yet, `errno` is needed to implement calloc:
+> The setting of errno and the [ENOMEM] error condition are mandatory if an insufficient memory condition occurs.
+https://pubs.opengroup.org/onlinepubs/9799919799/functions/calloc.html
+
+POSIX explicitly describes two situations in which errno should be set to `ENOMEM`:
+> Insufficient memory is available, including the case when `nelem * elsize` would overflow
+
+In the usual case of insufficient memory, we don't need to set `errno` ourselves. We just call `malloc` and let it set `errno` if the allocation fails. The interesting case is when `nelem * elsize` would overflow. This also requires us to set errno, but we can't do it directly because of that bug in the Moulinette.
+
+Currently, the best workaround I found is to call `malloc(PTRDIFF_MAX)` to force a malloc failure and have it set errno for us:
+
+```c
+if (element_size != 0 && nbr_of_elements > SIZE_MAX / element_size)
+{
+	return (malloc(PTRDIFF_MAX));
+}
+```
+
+This was tested on school computers with both GCC and Clang, and failed successfully 👍
+
+It is still not perfect, though, since nothing in the Standard guarantees that this will fail. But in practice, it is highly unlikely that your computer will let you allocate 9,223,372 *tera*bytes of RAM.
+
+> [!TIP]
+> I had initially chosen to call `malloc(SIZE_MAX)`, but gcc caps the allocation limit at `PTRDIFF_MAX` with `-Walloc-size-larger-than=`, which results in a warning (turned into an error by `-Werror`) if this limit is exceeded. So `PTRDIFF_MAX` it will be!
+
+I'm not updating my implementation in this repository because I want to keep it clean, but I will in the files I submit.
+
+I reported the bug. Hopefully it'll be fixed.
 
 ### -O3 flag
 
@@ -245,20 +292,7 @@ This had the following consequences:
 
 ### atoi
 
-My implementation does nothing to detect or handle out-of-bounds overflow. I based this design choice on the following excerpt from the C Standard:
-> The functions atof, **atoi**, atol, and atoll **need not affect the value of the integer expression errno on an error. If the value of the result cannot be represented, the behavior is undefined**.
-
-However, my implementation ensures that all valid, representable values within the range of an `int` are parsed correctly without triggering internal overflows. This requires special care due to how string-to-integer conversion is typically implemented.
-
-Usually, `atoi` calculates the result by reading digits into a positive accumulator (multiplying by 10 and adding the new digit), and only converts the final result to a negative number at the very end if a minus sign was detected. In C, [signed integer overflow is strict Undefined Behavior (UB)](https://wiki.sei.cmu.edu/confluence/spaces/c/pages/87152210/INT32-C.+Ensure+that+operations+on+signed+integers+do+not+result+in+overflow).
-
-This standard accumulation strategy creates a subtle problem when parsing `INT_MIN`. In two's complement arithmetic, the absolute value of `INT_MIN` is exactly one greater than `INT_MAX`. Therefore, if the accumulator is simply declared as an `int`, parsing the string representation of `INT_MIN` will cause a signed integer overflow on the final digit, triggering UB before the negation step is ever reached.
-
-On many common architectures, this bug goes completely unnoticed. The compiler's underlying behavior for signed overflow often defaults to two's complement wraparound, meaning the positive accumulator wraps completely around to the negative `INT_MIN` value. Negating `INT_MIN` typically yields `INT_MIN` again, making the function output the correct answer by sheer luck. However, relying on this is unsafe and violates the C standard; compiling the code with `-fsanitize=undefined` then running it flags this as an error.
-
-To solve this, one might be tempted to use a larger signed type, such as `long`, for the accumulator. However, this is not a portable solution. The C Standard does not guarantee that `long` (or even a `long long` for that matter) is larger than `int`; for example, under the LLP64 data model used by 64-bit Windows, both `int` and `long` are exactly 32 bits.
-
-Therefore, the only strictly portable way to safely accumulate digits and support `INT_MIN` is to use an `unsigned int` for the accumulator. Unsigned arithmetic is guaranteed by the Standard never to overflow (it operates using modulo arithmetic), and an `unsigned int` is perfectly capable of holding the absolute value of `INT_MIN` before the final sign logic is applied.
+\[REDACTED\]
 
 ### List functions and NULL heads
 
@@ -299,7 +333,7 @@ https://gcc.gnu.org/onlinedocs/gcc-3.3/gcc/Type-Attributes.html
 > ~~Science~~ *THE C STANDARD*, already oppressive with its shocking revelations, will perhaps be the ultimate exterminator of our human species - if separate species we be - for its reserve of unguessed horrors could never be borne by mortal brains if loosed upon the world  
 > ― *H.P. Lovecraft* 
 
-Type aliasing is that kind of cursed knowledge you almost wish you had never learned about. Because now you see problems in code you never suspected was broken, and you won't be able to resist the urge to fix them. Even though the odds of this ever coming back to bite you are close to zero.
+Type aliasing is that kind of cursed knowledge I almost wish I had never learned about. Because now I see problems in code I never suspected was broken, and I can't help but fix them.
 
 Understanding the aliasing rules led me to rewrite my memory functions to make them (hopefully) portable. The following two articles were helpful in understanding the concept:
 
@@ -310,10 +344,10 @@ Understanding the aliasing rules led me to rewrite my memory functions to make t
 
 In a famous TED interview, Linus Torvalds demonstrates an approach to implementing linked-list functions that he considers "good taste" in coding. This used to be particularly helpful during my Piscine, but not so much when writing this library, unfortunately. I still used it to implement `lstmap`, though, so I guess it's still fair game to list it here. The following repository was a great help in understanding the concept: https://github.com/mkirchner/linked-list-good-taste
 
-### ChatGPT 5.3(?)
+### AI usage
 
-This entire project has been handcrafted by a human (yours truly), but proofread by AI. Many thanks to the free version of ChatGPT for fixing my grammar and providing feedback on my cursed code!
+- **Proofreading**: This README has been proofread by AI. I had to yell at it an uncountable number of times because it kept altering my style. Hopefully, it didn't turn out too awkward. The section about `atoi` was heavily AI-generated. I regret it. I feel like my entire (otherwise handwritten!) README has lost its worth because of it. I'm going to wipe it out from the universe if I can find the time to rewrite it before I submit my project.
+- **Coming up with test cases**
+- **Acting as a search engine on steroids**
 
-### Gemini Flash 3.6
-
-Gemini Flash 3.6 was used to help write unit tests.
+Someone said the AI revolution was a time of grief. Grief for the world that came before. I agree. Right now, I'm grieving. I wrote my Libft during the [bargaining stage](https://en.wikipedia.org/wiki/Five_stages_of_grief). Using AI as my search engine is currently as far as I'd go. 42's projects are my playground, and I don't want to ruin everything by giving up my fun time tinkering with computers to a machine. Well, I had an LLM generate a considerable chunk of the tests. But tests are never fun to write, so it doesn't count. (See? Bargaining stage! Told you!).
