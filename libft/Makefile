@@ -4,7 +4,7 @@ CC := cc
 AR := ar
 
 ARFLAGS := rcs
-CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wvla -fPIC -flto -ffat-lto-objects
+CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wvla -fPIC
 DEPFLAGS := -MMD -MP
 CPPFLAGS := $(DEPFLAGS) -I.
 
