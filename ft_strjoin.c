@@ -6,11 +6,10 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:34:40 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/30 17:16:25 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/20 20:37:00 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>	// provides ENOMEM, errno
 #include <stdint.h>	// provides SIZE_MAX
 #include <stdlib.h>	// provides malloc, NULL, size_t
 #include "libft.h"	// provides ft_memcpy, ft_strlen
@@ -24,7 +23,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	if (len1 > SIZE_MAX - len2 - 1)
 	{
-		errno = ENOMEM;
 		return (NULL);
 	}
 	joined = malloc(len1 + len2 + 1);

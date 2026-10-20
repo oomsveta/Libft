@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 17:32:33 by lwicket           #+#    #+#             */
-/*   Updated: 2026/05/03 20:00:16 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/20 20:35:21 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #if defined(__linux__) || defined(__APPLE__)
 
-# include <errno.h>		// provides EINTR, errno
 # include <unistd.h>	// provides size_t, ssize_t, write
 
 #elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
@@ -37,10 +36,6 @@ void	ft_putstr_fd(char *str, int fd)
 		bytes_written = write(fd, str + total_written, len - total_written);
 		if (bytes_written == -1)
 		{
-			if (errno == EINTR)
-			{
-				continue ;
-			}
 			return ;
 		}
 		total_written += bytes_written;
