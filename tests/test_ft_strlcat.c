@@ -46,6 +46,11 @@ void test_ft_strlcat_src_truncated(void)
     TEST_ASSERT_EQUAL_STRING("swamped", buffer);
 }
 
+/**
+ * > A terminating NUL byte shall be appended to the result, UNLESS ITS LOCATION
+ * > WOULD BE AT OR BEYOND DST + DSTSIZE.
+ * https://pubs.opengroup.org/onlinepubs/9799919799/functions/strlcat.html
+ */
 void test_ft_strlcat_dstsize_0(void)
 {
     strcpy(buffer, "Mario");
@@ -80,7 +85,13 @@ void test_ft_strlcat_empty_dst(void)
     TEST_ASSERT_EQUAL_STRING("stroopwafel", buffer);
 }
 
-void test_ft_strlcat_no_null_in_dstsize(void)
+/**
+ * > Note however, that if strlcat() traverses size characters without finding a
+ * > NUL, the length of the string is considered to be size and the destination
+ * > string will not be NUL-terminated (since there was no space for the NUL).
+ * https://linux.die.net/man/3/strlcat
+ */
+void test_ft_strlcat_no_null_within_dstsize(void)
 {
     const size_t res = ft_strlcat(buffer, "Shrek", 5);
     TEST_ASSERT_EQUAL_size_t(10, res); // size + len("Shrek")
