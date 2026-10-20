@@ -8,7 +8,7 @@
 ## ℹ️ Project Overview
 
 > [!WARNING]
-> This project is still a work in progress. Its contents, along with the information in this README file, are subject to change.
+> This branch contains a stripped-down version of the project. It has been reorganized to match the expected structure of the assignment. Among other things, the test suite has been removed. See the main branch for the full, unabridged code.
 
 The **Libft** (where *ft* stands for *Forty-Two*) is the very first project of the [42 School](https://en.wikipedia.org/wiki/42_(school)). It consists of reimplementing various functions from the [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library), along with a few custom ones.
 
