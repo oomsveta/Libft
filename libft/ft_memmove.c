@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 09:22:10 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/30 17:22:13 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/20 18:29:32 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	{
 		return (dest);
 	}
-	if ((uintptr_t)src - (uintptr_t) dest - n <= -2 * n)
+	if ((uintptr_t)src - (uintptr_t)dest - n <= -2 * n)
 	{
 		return (ft_memcpy(dest, src, n));
 	}
