@@ -78,5 +78,6 @@ void	*ft_memchr(const void *mem, int chr, size_t n)
 		ptr += sizeof(t_word);
 		n -= sizeof(t_word);
 	}
-	return (test_word(end - sizeof(t_word), *(t_word *)ptr, chr, broadcast));
+	ptr = end - sizeof(t_word);
+	return (test_word(ptr, *(t_word *)ptr, chr, broadcast));
 }
