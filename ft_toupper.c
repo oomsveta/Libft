@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h"	// validates prototypes
 
 static inline int	ft_islower(int c)
 {

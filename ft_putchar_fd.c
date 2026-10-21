@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h"		// validates prototypes
 
 #if defined(__linux__) || defined(__APPLE__)
 
@@ -18,7 +18,7 @@
 
 #elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 
-# include <windows.h>
+# include <windows.h>	// provides DWORD, HANDLE, WriteFile
 
 #endif
 

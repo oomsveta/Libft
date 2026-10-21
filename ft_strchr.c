@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stddef.h>	// provides size_t
-#include "libft.h"
+#include "libft.h"	// validates prototypes
 
 char	*ft_strchr(const char *str, int chr)
 {

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdbool.h>	// provides bool
-#include "libft.h"
+#include "libft.h"		// provides ft_strchr
 
 static size_t	ft_strspn(const char *str, const char *spn)
 {

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stddef.h>	// provides size_t
-#include "libft.h"
+#include "libft.h"	// validates prototypes
 
 void	ft_striteri(char *str, void (*fn)(unsigned int, char *))
 {
