@@ -132,3 +132,13 @@ void test_ft_split_only_separators(void)
 
     free_all(res);
 }
+
+void test_ft_split_empty_str_nul_sep(void)
+{
+    char **res = ft_split("", '\0');
+
+    TEST_ASSERT_NOT_NULL(res);
+    TEST_ASSERT_NULL(res[0]);
+
+    free_all(res);
+}
