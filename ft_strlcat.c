@@ -11,7 +11,19 @@
 /* ************************************************************************** */
 
 #include <stddef.h>	// provides size_t
-#include "libft.h"	// provides ft_strlcpy, ft_strlen, ft_strnlen
+#include "libft.h"	// provides ft_strlcpy, ft_strlen
+
+static size_t	ft_strnlen(const char *str, size_t n)
+{
+	size_t	len;
+
+	len = 0;
+	while (len < n && str[len] != '\0')
+	{
+		len += 1;
+	}
+	return (len);
+}
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {

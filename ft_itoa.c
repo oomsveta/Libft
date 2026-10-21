@@ -13,7 +13,7 @@
 #include <limits.h>	// provides CHAR_BIT
 #include "libft.h"	// provides ft_strdup
 
-unsigned int	ft_abs(int n)
+static unsigned int	ft_abs(int n)
 {
 	if (n < 0)
 	{

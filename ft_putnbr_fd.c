@@ -16,7 +16,16 @@
 #endif
 
 #include <limits.h>	// provides CHAR_BIT
-#include "libft.h"	// provides ft_abs, ft_putstr_fd
+#include "libft.h"	// provides ft_putstr_fd
+
+static unsigned int	ft_abs(int n)
+{
+	if (n < 0)
+	{
+		return (-(unsigned int)n);
+	}
+	return (+n);
+}
 
 #if defined(__linux__) || defined(__APPLE__)
 

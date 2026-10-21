@@ -11,7 +11,17 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>	// provides free, malloc, NULL, size_t
-#include "libft.h"	// provides ft_strchrnul, ft_substr
+#include "libft.h"	// provides ft_substr
+
+static char	*ft_strchrnul(const char *str, int chr)
+{
+	chr = (unsigned char)chr;
+	while (*str && *(unsigned char *)str != chr)
+	{
+		str += 1;
+	}
+	return ((char *)str);
+}
 
 static char	*skip_char(const char *str, char c)
 {

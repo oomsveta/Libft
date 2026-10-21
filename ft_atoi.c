@@ -11,7 +11,23 @@
 /* ************************************************************************** */
 
 #include <stdbool.h>	// provides bool
-#include "libft.h"		// provides ft_strspn
+#include "libft.h"
+
+static size_t	ft_strspn(const char *str, const char *spn)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len] != '\0')
+	{
+		if (!ft_strchr(spn, str[len]))
+		{
+			return (len);
+		}
+		len += 1;
+	}
+	return (len);
+}
 
 int	ft_atoi(const char *nptr)
 {

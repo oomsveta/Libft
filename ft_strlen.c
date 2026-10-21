@@ -24,15 +24,3 @@ size_t	ft_strlen(const char *str)
 	}
 	return (len);
 }
-
-size_t	ft_strnlen(const char *str, size_t n)
-{
-	size_t	len;
-
-	len = 0;
-	while (len < n && str[len] != '\0')
-	{
-		len += 1;
-	}
-	return (len);
-}

@@ -11,7 +11,23 @@
 /* ************************************************************************** */
 
 #include <stddef.h>	// provides size_t
-#include "libft.h"	// provides ft_strchr, ft_strlen, ft_strspn, ft_substr
+#include "libft.h"	// provides ft_strchr, ft_strlen, ft_substr
+
+static size_t	ft_strspn(const char *str, const char *spn)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len] != '\0')
+	{
+		if (!ft_strchr(spn, str[len]))
+		{
+			return (len);
+		}
+		len += 1;
+	}
+	return (len);
+}
 
 [[nodiscard]]
 char	*ft_strtrim(const char *str, const char *chars)

@@ -26,29 +26,3 @@ char	*ft_strchr(const char *str, int chr)
 	}
 	return ((char *)str);
 }
-
-char	*ft_strchrnul(const char *str, int chr)
-{
-	chr = (unsigned char)chr;
-	while (*str && *(unsigned char *)str != chr)
-	{
-		str += 1;
-	}
-	return ((char *)str);
-}
-
-size_t	ft_strspn(const char *str, const char *spn)
-{
-	size_t	len;
-
-	len = 0;
-	while (str[len] != '\0')
-	{
-		if (!ft_strchr(spn, str[len]))
-		{
-			return (len);
-		}
-		len += 1;
-	}
-	return (len);
-}

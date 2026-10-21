@@ -11,7 +11,19 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>	// provides malloc, NULL, size_t
-#include "libft.h"	// provides ft_memcpy, ft_strnlen
+#include "libft.h"	// provides ft_memcpy
+
+static size_t	ft_strnlen(const char *str, size_t n)
+{
+	size_t	len;
+
+	len = 0;
+	while (len < n && str[len] != '\0')
+	{
+		len += 1;
+	}
+	return (len);
+}
 
 [[nodiscard]]
 char	*ft_substr(const char *str, unsigned int start, size_t max_len)
