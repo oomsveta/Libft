@@ -25,6 +25,10 @@ static char	*ft_strchrnul(const char *str, int chr)
 
 static char	*skip_char(const char *str, char c)
 {
+	if (c == '\0')
+	{
+		return ((char *)str);
+	}
 	while (*str == c)
 	{
 		str += 1;
