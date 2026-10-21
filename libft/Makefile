@@ -4,7 +4,7 @@ CC := cc
 AR := ar
 
 ARFLAGS := rcs
-CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wvla -fPIC
+CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wvla -fPIC -g
 DEPFLAGS := -MMD -MP
 CPPFLAGS := $(DEPFLAGS) -I.
 
@@ -18,7 +18,7 @@ ifdef DEBUG
     CC := clang
     CFLAGS += -g3 -Og -fsanitize=undefined
 else
-    CFLAGS += -O3 -g0 -fno-builtin
+    CFLAGS += -O3 -fno-builtin
 endif
 
 ifdef ASAN
