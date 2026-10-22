@@ -13,12 +13,6 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
-
-#  include <windows.h>
-
-# endif
-
 # include <stddef.h>
 # include <stdint.h>
 
@@ -82,21 +76,9 @@ void	ft_lstclear(t_list **head, void (*delete_fn)(void *));
 void	ft_lstdelone(t_list *node, void (*delete_fn)(void *));
 void	ft_lstiter(t_list *lst, void (*fn)(void *));
 void	ft_striteri(char *str, void (*fn)(unsigned int, char *));
-
-# if defined(__linux__) || defined(__APPLE__)
-
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *str, int fd);
-
-# elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
-
-void	ft_putstr_fd(char *str, HANDLE file_handle);
-void	ft_putnbr_fd(int n, HANDLE file_handle);
-void	ft_putchar_fd(char c, HANDLE file_handle);
-void	ft_putendl_fd(char *str, HANDLE file_handle);
-
-# endif
 
 #endif /* LIBFT_H */

@@ -8,12 +8,6 @@ CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -Wvla -fPIC -g
 DEPFLAGS := -MMD -MP
 CPPFLAGS := $(DEPFLAGS) -I.
 
-ifdef WINDOWS
-	CC := x86_64-w64-mingw32-gcc
-	AR := x86_64-w64-mingw32-ar
-	NAME := libft.lib
-endif
-
 ifdef DEBUG
     CC := clang
     CFLAGS += -g3 -Og -fsanitize=undefined
@@ -54,11 +48,8 @@ re: fclean all
 norm:
 	norminette $(SRC) *.h
 
-windows:
-	@$(MAKE) WINDOWS=1 re
-
-ifeq (,$(filter clean fclean norm re windows, $(MAKECMDGOALS)))
+ifeq (,$(filter clean fclean norm re, $(MAKECMDGOALS)))
 -include $(DEP)
 endif
 
-.PHONY: all clean fclean re norm windows
+.PHONY: all clean fclean re norm
