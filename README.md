@@ -101,7 +101,7 @@ As per the assignment, the code is compiled using `cc`. It is not specified whic
 > At the time I wrote this, on the Brussels campus, whether `cc` points to GCC or Clang actually varies from one machine to another.
 
 ~~My project relies on features from C99 (compound literals, inline functions, single-line comments and `stdbool.h`).~~  
-My project makes use of the `[[nodiscard]]` attribute introduced in C23. Other than that, it doesn't leverage any feature newer than C99.
+My project makes use of the `[[nodiscard]]` attribute and the ckd_mul macro introduced in C23. Other than that, it doesn't leverage any feature newer than C99.
 
 ### Building the library
 
