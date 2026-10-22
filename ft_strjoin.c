@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:34:40 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/20 20:37:00 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:28:06 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>	// provides malloc, NULL, size_t
 #include "libft.h"	// provides ft_memcpy, ft_strlen
 
-[[nodiscard]]
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	const size_t	len1 = ft_strlen(s1);

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 20:28:16 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/28 10:40:09 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:27:52 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	free_all(char *words[], size_t len)
 	free(words);
 }
 
-[[nodiscard]]
 char	**ft_split(const char *str, char separator)
 {
 	const char	*end_ptr;

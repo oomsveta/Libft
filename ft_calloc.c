@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 00:42:15 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/20 20:34:47 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:27:02 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>	// provides malloc, NULL, size_t
 #include "libft.h"	// provides ft_bzero
 
-[[nodiscard]]
 void	*ft_calloc(size_t nbr_of_elements, size_t element_size)
 {
 	void	*buffer;

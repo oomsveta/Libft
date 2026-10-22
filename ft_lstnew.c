@@ -6,14 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 17:37:50 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/04 14:08:11 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:27:27 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>	// provides NULL, malloc
 #include "libft.h"	// provides t_list
 
-[[nodiscard]]
 t_list	*ft_lstnew(void *content)
 {
 	t_list	*new_node;

@@ -92,7 +92,7 @@ The following functions are not part of the standard C library. Their implementa
 
 - GCC or Clang
 - [`ar`](https://en.wikipedia.org/wiki/Ar_(Unix)) for creating the archive
-- [C23](https://en.cppreference.com/w/c/23.html) support
+- [C99](https://en.cppreference.com/w/c/99.html) support
 - A UNIX-like system (such as Linux or macOS)
 
 As per the assignment, the code is compiled using `cc`. It is not specified which compiler `cc` refers to, but it is safe to assume that it will be either GCC or Clang.
@@ -100,8 +100,7 @@ As per the assignment, the code is compiled using `cc`. It is not specified whic
 > [!TIP]
 > At the time I wrote this, on the Brussels campus, whether `cc` points to GCC or Clang actually varies from one machine to another.
 
-~~My project relies on features from C99 (compound literals, inline functions, single-line comments and `stdbool.h`).~~  
-My project makes use of the `[[nodiscard]]` attribute introduced in C23. Other than that, it doesn't leverage any feature newer than C99.
+My project relies on features from C99 (compound literals, inline functions, single-line comments and `stdbool.h`).  
 
 ### Building the library
 

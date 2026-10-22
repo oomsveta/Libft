@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:15:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/04 14:11:35 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:28:22 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static size_t	ft_strnlen(const char *str, size_t n)
 	return (len);
 }
 
-[[nodiscard]]
 char	*ft_substr(const char *str, unsigned int start, size_t max_len)
 {
 	size_t	len;

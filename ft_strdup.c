@@ -6,14 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 21:08:18 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/04 14:15:17 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:28:01 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>	// provides malloc, NULL, size_t
 #include "libft.h"	// provides ft_memcpy, ft_strlen
 
-[[nodiscard]]
 char	*ft_strdup(const char *str)
 {
 	const size_t	size = ft_strlen(str) + 1;

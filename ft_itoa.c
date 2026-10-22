@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 21:06:40 by lwicket           #+#    #+#             */
-/*   Updated: 2026/09/04 14:10:46 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/22 19:27:11 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static unsigned int	ft_abs(int n)
 	return (+n);
 }
 
-[[nodiscard]]
 char	*ft_itoa(int n)
 {
 	char			buffer[(sizeof(int) * CHAR_BIT - 1) * 28 / 93 + 3];
